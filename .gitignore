@@ -1,5 +1,14 @@
 # Ignore generated article outputs
-bbc_official_articles/
+bbc_chinese_simp_aiticles/
+bbc_chinese_trad_aiticles/
+bbc_english_top_articles/
+bbc_english_world_articles/
+bbc_english_business_articles/
+bbc_english_technology_articles/
+bbc_english_science_articles/
+bbc_english_health_articles/
+bbc_english_arts_articles/
+
 
 # Python virtualenv and caches
 venv/
