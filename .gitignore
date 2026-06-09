@@ -1,0 +1,13 @@
+# Ignore generated article outputs
+bbc_official_articles/
+
+# Python virtualenv and caches
+venv/
+__pycache__/
+*.pyc
+
+# Editor/OS
+.DS_Store
+
+# untrack_generated.bat
+untrack_generated.bat
