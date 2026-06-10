@@ -1,0 +1,215 @@
+[2026-06-10 15:11:17] [INFO] BBC 自动化数据收割分发底座初始化完毕
+[2026-06-10 15:11:23] [INFO] ======= 触发最新实时增量同步任务 =======
+[2026-06-10 15:11:26] [DEBUG] 核心容器未达成预设完整度，启动柔性自愈轨道: https://www.bbc.com/news/videos/c5yzpg514v0o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:26] [INFO] 文章落盘成功: 20260610_Watch_Residents_flee_as_cars_and_houses_burn_in_Belfast.md [频道: bbc_english_top]
+[2026-06-10 15:11:27] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cqj1rkqqrgro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:27] [INFO] 文章落盘成功: 20260610_Illegal_mini-marts_to_shut_for_up_to_12_months_under_law_change_prompted_by_BBC.md [频道: bbc_english_top]
+[2026-06-10 15:11:28] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cze9359gglyo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:28] [INFO] 文章落盘成功: 20260610_US_strikes_Iran_in_response_to_downing_of_military_helicopter.md [频道: bbc_english_top]
+[2026-06-10 15:11:29] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cjdgl548x3eo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:29] [INFO] 文章落盘成功: 20260609_Bowen_Trump_and_Netanyahu_wanted_to_reshape_the_Middle_East_-_now_they_risk_a_permacrisis.md [频道: bbc_english_top]
+[2026-06-10 15:11:30] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c5yzwy055xdo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:30] [INFO] 文章落盘成功: 20260609_David_Sullivan_banned_from_contact_with_West_Ham_women's_and_youth_teams_since_2023.md [频道: bbc_english_top]
+[2026-06-10 15:11:31] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c20y6966xqzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:31] [INFO] 文章落盘成功: 20260609_Inside_Myanmar,_rebels_are_losing_ground_as_military_forces_men_into_army.md [频道: bbc_english_top]
+[2026-06-10 15:11:33] [DEBUG] 核心容器未达成预设完整度，启动柔性自愈轨道: https://www.bbc.com/news/videos/cx2k5nq51lgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:34] [INFO] 文章落盘成功: 20260609_Watch_BBC_goes_into_jungle_with_Myanmar's_civil_war_rebels.md [频道: bbc_english_top]
+[2026-06-10 15:11:35] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c0q2jgkwk0no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:35] [INFO] 文章落盘成功: 20260610_Model_who_alleges_Kanye_West_choked_her_tells_BBC_she_felt_'suffocated_and_scared'.md [频道: bbc_english_top]
+[2026-06-10 15:11:36] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c79yzqw0z0wo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:36] [INFO] 文章落盘成功: 20260610_Twelve_killed_in_mass_shooting_in_Johannesburg,_police_say.md [频道: bbc_english_top]
+[2026-06-10 15:11:37] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/crm02mmgr3ro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:37] [INFO] 文章落盘成功: 20260609_Advanced_radiotherapy_for_prostate_cancer_to_cut_sessions_from_20_to_five.md [频道: bbc_english_top]
+[2026-06-10 15:11:38] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/weather/articles/c74y8p34nvno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:38] [INFO] 文章落盘成功: 20260610_The_UK_could_hit_28C_this_weekend_-_is_another_heatwave_on_the_way.md [频道: bbc_english_top]
+[2026-06-10 15:11:43] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c0r2yldw1vjo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:43] [INFO] 文章落盘成功: 20260609_How_to_enjoy_the_World_Cup_-_and_keep_your_boss_on_side.md [频道: bbc_english_top]
+[2026-06-10 15:11:44] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/clyr6drdl79o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:44] [INFO] 文章落盘成功: 20260609_Does_referee_case_show_Fifa_has_lost_control_of_its_own_World_Cup.md [频道: bbc_english_top]
+[2026-06-10 15:11:46] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cn0p0gkl90go?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:46] [INFO] 文章落盘成功: 20260609_Twenty_new_players_to_look_out_for.md [频道: bbc_english_top]
+[2026-06-10 15:11:47] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cg4wqr2ev33o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:47] [INFO] 文章落盘成功: 20260609_Why_super-sized_and_politicised_World_Cup_comes_at_a_cost.md [频道: bbc_english_top]
+[2026-06-10 15:11:48] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cn0plqlkl51o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:48] [INFO] 文章落盘成功: 20260609_Play_BBC_Sport's_new_predictor_game.md [频道: bbc_english_top]
+[2026-06-10 15:11:49] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cg7485gyxz9o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:49] [INFO] 文章落盘成功: 20260610_Who_will_win_the_World_Cup_BBC_pundits_make_their_predictions.md [频道: bbc_english_top]
+[2026-06-10 15:11:51] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c1jydj76pzno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:51] [INFO] 文章落盘成功: 20260610_'People_didn't_believe_I_was_sleeping_rough'_The_UK's_hidden_homeless_women.md [频道: bbc_english_top]
+[2026-06-10 15:11:52] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cr5j40ezgz4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:52] [INFO] 文章落盘成功: 20260609_Nasa_has_named_the_Artemis_III_crew_-_what_is_their_mission.md [频道: bbc_english_top]
+[2026-06-10 15:11:54] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cyv0yzv8940o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:54] [INFO] 文章落盘成功: 20260609_Identical_twin_given_six_months_to_live_says_leaving_sister_is_'unthinkable'.md [频道: bbc_english_top]
+[2026-06-10 15:11:55] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c982ddx2zkgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:55] [INFO] 文章落盘成功: 20260610_The_Papers_'Violence_in_Belfast'_and_Trump's_'war_words'.md [频道: bbc_english_top]
+[2026-06-10 15:11:57] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c78k2z9d4e4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:57] [INFO] 文章落盘成功: 20260610_My_wife's_'unadoptable'_baby_was_left_to_die_at_unmarried_mothers'_home.md [频道: bbc_english_top]
+[2026-06-10 15:11:58] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cx2x5z4202jo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:11:58] [INFO] 文章落盘成功: 20260609_With_no_team_in_World_Cup,_China_fans_rally_around_a_red_card-happy_referee.md [频道: bbc_english_top]
+[2026-06-10 15:12:00] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cdjkevgv9rzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:00] [INFO] 文章落盘成功: 20260609_Bill_debt_soars_but_many_don't_know_help_is_available.md [频道: bbc_english_top]
+[2026-06-10 15:12:02] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c77yl1p0vvxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:02] [INFO] 文章落盘成功: 20260610_Former_Cameron_adviser_Steve_Hilton_advances_in_California_governor's_race.md [频道: bbc_english_top]
+[2026-06-10 15:12:03] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c892lj7xn02o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:03] [INFO] 文章落盘成功: 20260609_Beauty_Pie_LED_mask_ad_banned_over_misleading_anti-wrinkle_claim.md [频道: bbc_english_top]
+[2026-06-10 15:12:04] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/ce3ez4zzzlvo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:04] [INFO] 文章落盘成功: 20260609_World's_largest_chipmaker_does_not_rule_out_price_rises_as_costs_increase.md [频道: bbc_english_top]
+[2026-06-10 15:12:05] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/ckg0l7g7n9no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:05] [INFO] 文章落盘成功: 20260610_Alleged_Bondi_Beach_gunman_charged_with_another_19_offences.md [频道: bbc_english_top]
+[2026-06-10 15:12:15] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.co.uk/news/10628994?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:15] [INFO] 文章落盘成功: 20250430_BBC_News_app.md [频道: bbc_english_top]
+[2026-06-10 15:12:16] [DEBUG] 核心容器未达成预设完整度，启动柔性自愈轨道: https://www.bbc.co.uk/sounds/play/p0nq8lzn?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:17] [INFO] 文章落盘成功: 20260609_What_We_Know_About_The_Belfast_Knife_Attack_So_Far.md [频道: bbc_english_top]
+[2026-06-10 15:12:22] [DEBUG] 核心容器未达成预设完整度，启动柔性自愈轨道: https://www.bbc.co.uk/sounds/play/p0nqvfkb?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:22] [INFO] 文章落盘成功: 20260608_Americanswers…_on_5_Live!_Why_did_Trump_walk_out_of_his_TV_interview_with_Meet_The_Press.md [频道: bbc_english_top]
+[2026-06-10 15:12:24] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cvg70dzg3ngo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:24] [INFO] 文章落盘成功: 20260609_Why_England_missed_out_on_automatic_World_Cup_spot.md [频道: bbc_english_top]
+[2026-06-10 15:12:26] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/tennis/articles/cwy0ldzprrwo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:26] [INFO] 文章落盘成功: 20260609_'Maybe_a_C-minus'_-_how_good_was_Williams'_winning_return.md [频道: bbc_english_top]
+[2026-06-10 15:12:27] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cq61ll2p5pzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:27] [INFO] 文章落盘成功: 20260609_Caution_over_Saka_as_Tuchel_says_England_must_dare_to_dream.md [频道: bbc_english_top]
+[2026-06-10 15:12:29] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cy5vy5w52wxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:29] [INFO] 文章落盘成功: 20260610_'Different'_Clarke_bids_to_smash_Scotland's_glass_ceiling.md [频道: bbc_english_top]
+[2026-06-10 15:12:30] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cwy0xl7dwv2o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:30] [INFO] 文章落盘成功: 20260609_Real_Madrid's_£130m_Alvarez_bid_laughed_off_by_Atletico.md [频道: bbc_english_top]
+[2026-06-10 15:12:32] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/cricket/articles/c4gydnq8qw2o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:12:32] [INFO] 文章落盘成功: 20260609_Stokes_and_alcohol_give_England_another_headache.md [频道: bbc_english_top]
+[2026-06-10 15:12:32] [INFO] 实时增量同步管道安全收工，本次新入库: 37
+[2026-06-10 15:13:42] [INFO] BBC 自动化数据收割分发底座初始化完毕
+[2026-06-10 15:13:52] [INFO] ======= 触发最新实时增量同步任务 =======
+[2026-06-10 15:13:53] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.com/news/videos/c5yzpg514v0o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:54] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cqj1rkqqrgro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:54] [INFO] 文章落盘成功: 20260610_Illegal_mini-marts_to_shut_for_up_to_12_months_under_law_change_prompted_by_BBC.md [频道: bbc_english_top]
+[2026-06-10 15:13:55] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cze9359gglyo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:55] [INFO] 文章落盘成功: 20260610_US_strikes_Iran_in_response_to_downing_of_military_helicopter.md [频道: bbc_english_top]
+[2026-06-10 15:13:56] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cjdgl548x3eo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:56] [INFO] 文章落盘成功: 20260609_Bowen_Trump_and_Netanyahu_wanted_to_reshape_the_Middle_East_-_now_they_risk_a_permacrisis.md [频道: bbc_english_top]
+[2026-06-10 15:13:57] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c5yzwy055xdo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:57] [INFO] 文章落盘成功: 20260609_David_Sullivan_banned_from_contact_with_West_Ham_women's_and_youth_teams_since_2023.md [频道: bbc_english_top]
+[2026-06-10 15:13:58] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c20y6966xqzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:13:58] [INFO] 文章落盘成功: 20260609_Inside_Myanmar,_rebels_are_losing_ground_as_military_forces_men_into_army.md [频道: bbc_english_top]
+[2026-06-10 15:13:58] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.com/news/videos/cx2k5nq51lgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:03] [ERROR] 提取正文出现严重未知异常: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), URL: https://www.bbc.com/news/articles/c0q2jgkwk0no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:05] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c79yzqw0z0wo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:05] [INFO] 文章落盘成功: 20260610_Twelve_killed_in_mass_shooting_in_Johannesburg,_police_say.md [频道: bbc_english_top]
+[2026-06-10 15:14:06] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/crm02mmgr3ro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:06] [INFO] 文章落盘成功: 20260609_Advanced_radiotherapy_for_prostate_cancer_to_cut_sessions_from_20_to_five.md [频道: bbc_english_top]
+[2026-06-10 15:14:07] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/weather/articles/c74y8p34nvno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:07] [INFO] 文章落盘成功: 20260610_The_UK_could_hit_28C_this_weekend_-_is_another_heatwave_on_the_way.md [频道: bbc_english_top]
+[2026-06-10 15:14:08] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c0r2yldw1vjo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:08] [INFO] 文章落盘成功: 20260609_How_to_enjoy_the_World_Cup_-_and_keep_your_boss_on_side.md [频道: bbc_english_top]
+[2026-06-10 15:14:09] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/clyr6drdl79o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:09] [INFO] 文章落盘成功: 20260609_Does_referee_case_show_Fifa_has_lost_control_of_its_own_World_Cup.md [频道: bbc_english_top]
+[2026-06-10 15:14:11] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cn0p0gkl90go?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:11] [INFO] 文章落盘成功: 20260609_Twenty_new_players_to_look_out_for.md [频道: bbc_english_top]
+[2026-06-10 15:14:12] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cg4wqr2ev33o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:12] [INFO] 文章落盘成功: 20260609_Why_super-sized_and_politicised_World_Cup_comes_at_a_cost.md [频道: bbc_english_top]
+[2026-06-10 15:14:13] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cn0plqlkl51o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:13] [INFO] 文章落盘成功: 20260609_Play_BBC_Sport's_new_predictor_game.md [频道: bbc_english_top]
+[2026-06-10 15:14:14] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cg7485gyxz9o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:14] [INFO] 文章落盘成功: 20260610_Who_will_win_the_World_Cup_BBC_pundits_make_their_predictions.md [频道: bbc_english_top]
+[2026-06-10 15:14:16] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c1jydj76pzno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:16] [INFO] 文章落盘成功: 20260610_'People_didn't_believe_I_was_sleeping_rough'_The_UK's_hidden_homeless_women.md [频道: bbc_english_top]
+[2026-06-10 15:14:17] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cr5j40ezgz4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:17] [INFO] 文章落盘成功: 20260609_Nasa_has_named_the_Artemis_III_crew_-_what_is_their_mission.md [频道: bbc_english_top]
+[2026-06-10 15:14:22] [ERROR] 提取正文出现严重未知异常: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), URL: https://www.bbc.com/news/articles/cyv0yzv8940o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:23] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c982ddx2zkgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:23] [INFO] 文章落盘成功: 20260610_The_Papers_'Violence_in_Belfast'_and_Trump's_'war_words'.md [频道: bbc_english_top]
+[2026-06-10 15:14:24] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c78k2z9d4e4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:24] [INFO] 文章落盘成功: 20260610_My_wife's_'unadoptable'_baby_was_left_to_die_at_unmarried_mothers'_home.md [频道: bbc_english_top]
+[2026-06-10 15:14:25] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cx2x5z4202jo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:25] [INFO] 文章落盘成功: 20260609_With_no_team_in_World_Cup,_China_fans_rally_around_a_red_card-happy_referee.md [频道: bbc_english_top]
+[2026-06-10 15:14:27] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/cdjkevgv9rzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:27] [INFO] 文章落盘成功: 20260609_Bill_debt_soars_but_many_don't_know_help_is_available.md [频道: bbc_english_top]
+[2026-06-10 15:14:28] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c77yl1p0vvxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:28] [INFO] 文章落盘成功: 20260610_Former_Cameron_adviser_Steve_Hilton_advances_in_California_governor's_race.md [频道: bbc_english_top]
+[2026-06-10 15:14:34] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/c892lj7xn02o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:34] [INFO] 文章落盘成功: 20260609_Beauty_Pie_LED_mask_ad_banned_over_misleading_anti-wrinkle_claim.md [频道: bbc_english_top]
+[2026-06-10 15:14:36] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/ce3ez4zzzlvo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:36] [INFO] 文章落盘成功: 20260609_World's_largest_chipmaker_does_not_rule_out_price_rises_as_costs_increase.md [频道: bbc_english_top]
+[2026-06-10 15:14:37] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/news/articles/ckg0l7g7n9no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:37] [INFO] 文章落盘成功: 20260610_Alleged_Bondi_Beach_gunman_charged_with_another_19_offences.md [频道: bbc_english_top]
+[2026-06-10 15:14:42] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.co.uk/news/10628994?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:42] [INFO] 文章落盘成功: 20250430_BBC_News_app.md [频道: bbc_english_top]
+[2026-06-10 15:14:42] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.co.uk/sounds/play/p0nq8lzn?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:42] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.co.uk/sounds/play/p0nqvfkb?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:43] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cvg70dzg3ngo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:43] [INFO] 文章落盘成功: 20260609_Why_England_missed_out_on_automatic_World_Cup_spot.md [频道: bbc_english_top]
+[2026-06-10 15:14:44] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/tennis/articles/cwy0ldzprrwo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:44] [INFO] 文章落盘成功: 20260609_'Maybe_a_C-minus'_-_how_good_was_Williams'_winning_return.md [频道: bbc_english_top]
+[2026-06-10 15:14:45] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cq61ll2p5pzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:45] [INFO] 文章落盘成功: 20260609_Caution_over_Saka_as_Tuchel_says_England_must_dare_to_dream.md [频道: bbc_english_top]
+[2026-06-10 15:14:46] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cy5vy5w52wxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:46] [INFO] 文章落盘成功: 20260610_'Different'_Clarke_bids_to_smash_Scotland's_glass_ceiling.md [频道: bbc_english_top]
+[2026-06-10 15:14:47] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/football/articles/cwy0xl7dwv2o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:47] [INFO] 文章落盘成功: 20260609_Real_Madrid's_£130m_Alvarez_bid_laughed_off_by_Atletico.md [频道: bbc_english_top]
+[2026-06-10 15:14:48] [INFO] 成功锁定 CSS 核心容器并完成靶向去噪，完美斩获纯净全量正文: https://www.bbc.com/sport/cricket/articles/c4gydnq8qw2o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:14:48] [INFO] 文章落盘成功: 20260609_Stokes_and_alcohol_give_England_another_headache.md [频道: bbc_english_top]
+[2026-06-10 15:34:22] [INFO] BBC 自动化数据收割分发底座初始化完毕
+[2026-06-10 15:34:24] [INFO] ======= 触发最新实时增量同步任务 =======
+[2026-06-10 15:34:25] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.com/news/videos/c5yzpg514v0o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:26] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cqj1rkqqrgro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:26] [INFO] 文章落盘成功: 20260610_Illegal_mini-marts_to_shut_for_up_to_12_months_under_law_change_prompted_by_BBC.md [频道: bbc_english_top]
+[2026-06-10 15:34:27] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cze9359gglyo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:27] [INFO] 文章落盘成功: 20260610_US_strikes_Iran_in_response_to_downing_of_military_helicopter.md [频道: bbc_english_top]
+[2026-06-10 15:34:28] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cjdgl548x3eo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:28] [INFO] 文章落盘成功: 20260609_Bowen_Trump_and_Netanyahu_wanted_to_reshape_the_Middle_East_-_now_they_risk_a_permacrisis.md [频道: bbc_english_top]
+[2026-06-10 15:34:29] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c5yzwy055xdo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:29] [INFO] 文章落盘成功: 20260609_David_Sullivan_banned_from_contact_with_West_Ham_women's_and_youth_teams_since_2023.md [频道: bbc_english_top]
+[2026-06-10 15:34:30] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c20y6966xqzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:30] [INFO] 文章落盘成功: 20260609_Inside_Myanmar,_rebels_are_losing_ground_as_military_forces_men_into_army.md [频道: bbc_english_top]
+[2026-06-10 15:34:30] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.com/news/videos/cx2k5nq51lgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:32] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c0q2jgkwk0no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:32] [INFO] 文章落盘成功: 20260610_Model_who_alleges_Kanye_West_choked_her_tells_BBC_she_felt_'suffocated_and_scared'.md [频道: bbc_english_top]
+[2026-06-10 15:34:33] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c79yzqw0z0wo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:33] [INFO] 文章落盘成功: 20260610_Twelve_killed_in_mass_shooting_in_Johannesburg,_police_say.md [频道: bbc_english_top]
+[2026-06-10 15:34:34] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/crm02mmgr3ro?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:34] [INFO] 文章落盘成功: 20260609_Advanced_radiotherapy_for_prostate_cancer_to_cut_sessions_from_20_to_five.md [频道: bbc_english_top]
+[2026-06-10 15:34:35] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/weather/articles/c74y8p34nvno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:35] [INFO] 文章落盘成功: 20260610_The_UK_could_hit_28C_this_weekend_-_is_another_heatwave_on_the_way.md [频道: bbc_english_top]
+[2026-06-10 15:34:36] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/football/articles/cg7485gyxz9o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:37] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c0r2yldw1vjo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:37] [INFO] 文章落盘成功: 20260609_How_to_enjoy_the_World_Cup_-_and_keep_your_boss_on_side.md [频道: bbc_english_top]
+[2026-06-10 15:34:38] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/clyr6drdl79o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:38] [INFO] 文章落盘成功: 20260609_Does_referee_case_show_Fifa_has_lost_control_of_its_own_World_Cup.md [频道: bbc_english_top]
+[2026-06-10 15:34:39] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/cn0p0gkl90go?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:39] [INFO] 文章落盘成功: 20260609_Twenty_new_players_to_look_out_for.md [频道: bbc_english_top]
+[2026-06-10 15:34:40] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cx2x5z4202jo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:40] [INFO] 文章落盘成功: 20260609_With_no_team_in_World_Cup,_China_fans_rally_around_a_red_card-happy_referee.md [频道: bbc_english_top]
+[2026-06-10 15:34:41] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/football/articles/cg4wqr2ev33o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:42] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/cn0plqlkl51o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:42] [INFO] 文章落盘成功: 20260609_Play_BBC_Sport's_new_predictor_game.md [频道: bbc_english_top]
+[2026-06-10 15:34:43] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c1jydj76pzno?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:43] [INFO] 文章落盘成功: 20260610_'People_didn't_believe_I_was_sleeping_rough'_The_UK's_hidden_homeless_women.md [频道: bbc_english_top]
+[2026-06-10 15:34:44] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cr5j40ezgz4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:44] [INFO] 文章落盘成功: 20260609_Nasa_has_named_the_Artemis_III_crew_-_what_is_their_mission.md [频道: bbc_english_top]
+[2026-06-10 15:34:45] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cyv0yzv8940o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:45] [INFO] 文章落盘成功: 20260609_Identical_twin_given_six_months_to_live_says_leaving_sister_is_'unthinkable'.md [频道: bbc_english_top]
+[2026-06-10 15:34:46] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c982ddx2zkgo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:47] [INFO] 文章落盘成功: 20260610_The_Papers_'Violence_in_Belfast'_and_Trump's_'war_words'.md [频道: bbc_english_top]
+[2026-06-10 15:34:47] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c78k2z9d4e4o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:47] [INFO] 文章落盘成功: 20260610_My_wife's_'unadoptable'_baby_was_left_to_die_at_unmarried_mothers'_home.md [频道: bbc_english_top]
+[2026-06-10 15:34:49] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/cdjkevgv9rzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:49] [INFO] 文章落盘成功: 20260609_Bill_debt_soars_but_many_don't_know_help_is_available.md [频道: bbc_english_top]
+[2026-06-10 15:34:50] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c77yl1p0vvxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:50] [INFO] 文章落盘成功: 20260610_Former_Cameron_adviser_Steve_Hilton_advances_in_California_governor's_race.md [频道: bbc_english_top]
+[2026-06-10 15:34:51] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/c892lj7xn02o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:51] [INFO] 文章落盘成功: 20260609_Beauty_Pie_LED_mask_ad_banned_over_misleading_anti-wrinkle_claim.md [频道: bbc_english_top]
+[2026-06-10 15:34:52] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/ce3ez4zzzlvo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:52] [INFO] 文章落盘成功: 20260609_World's_largest_chipmaker_does_not_rule_out_price_rises_as_costs_increase.md [频道: bbc_english_top]
+[2026-06-10 15:34:53] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/news/articles/ckg0l7g7n9no?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:53] [INFO] 文章落盘成功: 20260610_Alleged_Bondi_Beach_gunman_charged_with_another_19_offences.md [频道: bbc_english_top]
+[2026-06-10 15:34:54] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.co.uk/news/10628994?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:54] [INFO] 文章落盘成功: 20250430_BBC_News_app.md [频道: bbc_english_top]
+[2026-06-10 15:34:54] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.co.uk/sounds/play/p0nq8lzn?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:54] [DEBUG] 成功在上游拦截并抛弃纯视音频/直播无文本节点: https://www.bbc.co.uk/sounds/play/p0nqvfkb?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:55] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/football/articles/cg7485gyxz9o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:56] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/cvg70dzg3ngo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:56] [INFO] 文章落盘成功: 20260609_England_face_up_to_two_rounds_of_World_Cup_play-offs.md [频道: bbc_english_top]
+[2026-06-10 15:34:57] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/tennis/articles/cwy0ldzprrwo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:58] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/cq61ll2p5pzo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:34:58] [INFO] 文章落盘成功: 20260609_Caution_over_Saka_as_Tuchel_says_England_must_dare_to_dream.md [频道: bbc_english_top]
+[2026-06-10 15:35:00] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/football/articles/cy5vy5w52wxo?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:35:01] [INFO] 成功锁定 CSS 核心容器，无损斩获 100% 纯净正文: https://www.bbc.com/sport/football/articles/cwy0xl7dwv2o?at_medium=RSS&at_campaign=rss
+[2026-06-10 15:35:01] [INFO] 文章落盘成功: 20260609_Real_Madrid's_£130m_Alvarez_bid_laughed_off_by_Atletico.md [频道: bbc_english_top]
+[2026-06-10 15:35:03] [DEBUG] 成功捕获并切断中间夹杂了原生视频播放器的污染文章: https://www.bbc.com/sport/cricket/articles/c4gydnq8qw2o?at_medium=RSS&at_campaign=rss
