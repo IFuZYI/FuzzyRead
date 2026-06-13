@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-main.py: 统一运行总入口
-支持本地终端纯净交互选择，与服务器命令行参数自动化隐式脚本部署
+main.py: 多站自适应综合控制面板入口
+支持本地终端直观交互选择，与 Linux 服务器命令行参数自动化隐式部署
 """
 
 import argparse
@@ -12,21 +12,21 @@ import config
 
 
 def parse_cli_args():
-    """解析命令行参数，供服务器脚本或 Cron Job 自动化调用"""
+    """解析命令行参数，供自动化脚本或服务器 Cron Job 定时触发"""
     current_year = datetime.now().year
-    parser = argparse.ArgumentParser(description="多轨自愈式 BBC 外刊内容资产收割底座")
+    parser = argparse.ArgumentParser(description="多轨多站自愈式外刊内容资产收割底座")
     
     parser.add_argument(
         "--mode", 
         type=str, 
         choices=["latest", "history", "retry"], 
-        help="指定运行 mode: latest(最新增量), history(历史区间), retry(修复失败节点)"
+        help="指定运行模式: latest(最新增量), history(历史区间), retry(修复失败节点)"
     )
     
     parser.add_argument(
         "--feeds", 
         nargs="+", 
-        help="指定下载的版块名称，如 bbc_english_technology bbc_chinese_simp (不传默认全选矩阵)"
+        help="指定需要的专栏标识符，如 bbc_english_technology time_english_top (不传默认全选大矩阵)"
     )
     
     parser.add_argument("--start", type=int, default=2020, help="历史模式起始年份 (默认: 2020)")
@@ -39,7 +39,7 @@ def show_interactive_menu():
     """终端交互主菜单"""
     current_year = datetime.now().year
     print("==================================================")
-    print("        多轨自愈式 BBC 外刊内容资产收割底座        ")
+    print("        多轨多站自愈式外刊内容资产收割底座         ")
     print("==================================================")
     print(" [1] 日常最新增量分类同步 (Latest Mode)")
     print(" [2] 历史区间全量分类收割 (History Mode)")
@@ -69,16 +69,16 @@ def show_interactive_menu():
 
 
 def select_feeds_interactively():
-    """终端交互式版块选品"""
-    print("\n当前配置中可用的 BBC 外刊订阅矩阵:")
+    """终端自适应订阅源矩阵选品页"""
+    print("\n当前全站配置中可用的中英文外刊订阅矩阵:")
     feed_keys = list(config.RSS_FEEDS.keys())
     for index, key in enumerate(feed_keys):
         print(f" [{index + 1}] {key}")
-    print(" [0] 全选所有版块")
+    print(" [0] 全选所有站点版块")
     print("==================================================")
     
     try:
-        user_input = input("请选择需要的版块序号 (多个请用空格隔开，如 '1 4 6'): ").strip()
+        user_input = input("请选择需要的版块序号 (多个请用空格隔开，如 '1 6 10'): ").strip()
         if not user_input or user_input == "0":
             return None
             
@@ -98,24 +98,23 @@ def select_feeds_interactively():
 def main():
     engine = BBCResourceDownloader()
     args = parse_cli_args()
-    current_year = datetime.now().year
     
     if args.mode:
-        # 命令行参数启动模式
+        # 参数隐式启动模式
         mode = args.mode
         target_feeds = args.feeds
         start_year = args.start
         end_year = args.end
-        print(f"参数解析成功: 正在以自动化命令行模式启动 -> {mode.upper()}")
+        print(f"多站参数解析成功: 正在启动自动化命令行任务 -> {mode.upper()}")
     else:
-        # 纯净终端输入输出交互模式
+        # 交互回显启动模式
         mode, start_year, end_year = show_interactive_menu()
         if mode in ["latest", "history"]:
             target_feeds = select_feeds_interactively()
         else:
             target_feeds = None
 
-    # 分发状态机执行赛道
+    # 分发执行赛道
     if mode == "latest":
         engine.sync_latest(target_keys=target_feeds)
     elif mode == "history":

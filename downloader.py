@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-downloader.py: 高性能 BBC Markdown 资产收割引擎
-深度融入视频/音频节点上游强力拦截卡尺，彻底清除纯视觉、纯声音等无正文垃圾流
+downloader.py: 多站通用大资产分布式 Markdown 归档收割状态机
+升级路径自适应引擎，完美兼容绝对路径与相对路径变量设定
 """
 
 import os
@@ -15,12 +15,16 @@ from tqdm import tqdm
 import config
 import utils
 
-# 初始化全局标准中央日志系统
-logger = logging.getLogger("bbc_harvest")
+# 初始化中央全局运维日志系统
+logger = logging.getLogger("multi_harvest")
 logger.setLevel(logging.DEBUG)
 
 if not logger.handlers:
-    file_handler = logging.FileHandler("bbc_harvest_run.log", encoding="utf-8")
+    # 动态锚定日志文件的落盘物理路径
+    log_base = os.path.abspath(config.DOWNLOAD_BASE_DIR)
+    os.makedirs(log_base, exist_ok=True)
+    
+    file_handler = logging.FileHandler(os.path.join(log_base, "harvest_run.log"), encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s", "%Y-%m-%d %H:%M:%S")
     file_handler.setFormatter(file_formatter)
@@ -37,10 +41,14 @@ class BBCResourceDownloader:
 
     def __init__(self):
         self.seen_urls = set()
-        logger.info("BBC 自动化数据收割分发底座初始化完毕")
+        # 预先创建用户设定的根下载大本营
+        os.makedirs(os.path.abspath(config.DOWNLOAD_BASE_DIR), exist_ok=True)
+        logger.info(f"多站内容资产全量收割底座启动 -> 根存储阵地设定为: {os.path.abspath(config.DOWNLOAD_BASE_DIR)}")
 
     def _get_feed_dir(self, feed_key):
-        return f"{feed_key}_articles"
+        """🎯【核心重构点】：自适应合并用户配置的绝对/相对路径变量，动态生成媒体专栏隔离目录"""
+        base_path = os.path.abspath(config.DOWNLOAD_BASE_DIR)
+        return os.path.join(base_path, f"{feed_key}_articles")
 
     def _get_log_paths(self, feed_key):
         base_dir = self._get_feed_dir(feed_key)
@@ -104,19 +112,24 @@ class BBCResourceDownloader:
             return dt.strftime("%Y%m%d"), dt.strftime("%Y"), dt.strftime("%m")
         except Exception:
             pass
+            
+        try:
+            dt = datetime.strptime(pub_date_clean, "%Y-%m-%dT%H:%M:%SZ")
+            return dt.strftime("%Y%m%d"), dt.strftime("%Y"), dt.strftime("%m")
+        except Exception:
+            pass
 
         now = datetime.now()
         return now.strftime("%Y%m%d"), now.strftime("%Y"), now.strftime("%m")
 
     def _save_article(self, feed_key, title, link, pub_date_str, url_log_path):
-        """核心存储状态机：上游拦截纯视频/纯音频页面，放行真正的图文 Articles"""
+        """通用落盘状态机"""
         if not link or link in self.seen_urls:
             return "duplicate"
 
-        # 🎯【核心卡尺】：在发起任何请求、任何清洗前，发现为纯视频或音频页面，在上游瞬间切断，禁止放行
         link_lower = link.lower()
-        if any(x in link_lower for x in ['/videos/', '/audio/', 'sounds/play/', '/live/']):
-            logger.debug(f"成功在上游拦截并抛弃纯视音频/直播无文本节点: {link}")
+        if any(blocked_kw in link_lower for blocked_kw in config.GLOBAL_URL_BLOCK_KEYWORDS):
+            logger.debug(f"成功在最上游拦截并强行切断纯视音频/多媒体无意义节点: {link}")
             return "duplicate"
 
         date_str, year_str, month_str = self._parse_pub_date(pub_date_str)
@@ -149,7 +162,7 @@ class BBCResourceDownloader:
             
             self.seen_urls.add(link)
             self._write_log(url_log_path, link)
-            logger.info(f"文章落盘成功: {filename} [频道: {feed_key}]")
+            logger.info(f"Markdown 资产成功分类入库: {filename} [频道: {feed_key}]")
             return "success"
             
         return "failed"
@@ -165,12 +178,17 @@ class BBCResourceDownloader:
             
             snapshot_download_count = 0
             snapshot_duplicate_count = 0
-            snapshot_failed_count = 0
 
             for item in items:
                 title = item.find("title").text if item.find("title") is not None else "Untitled"
                 link = item.find("link").text if item.find("link") is not None else ""
                 pub_date_str = item.find("pubDate").text if item.find("pubDate") is not None else ""
+
+                if not pub_date_str:
+                    for child in item:
+                        if child.tag.endswith('date'):
+                            pub_date_str = child.text
+                            break
 
                 if link:
                     status = self._save_article(feed_key, title, link, pub_date_str, url_log_path)
@@ -178,19 +196,17 @@ class BBCResourceDownloader:
                         snapshot_download_count += 1
                     elif status == "duplicate":
                         snapshot_duplicate_count += 1
-                    elif status == "failed":
-                        snapshot_failed_count += 1
 
             if snapshot_download_count > 0 or snapshot_duplicate_count > 0:
                 return True
             return False
         except Exception as e:
-            logger.error(f"解析 XML 快照崩溃: {e}")
+            logger.error(f"解析多站历史 XML 快照崩溃: {e}")
             return False
 
     def sync_latest(self, target_keys=None):
-        logger.info("======= 触发最新实时增量同步任务 =======")
-        print("[增量同步模式] 开始扫描官方原生实时 RSS 订阅流...")
+        logger.info("======= 触发多站最新实时增量同步任务 =======")
+        print("[增量同步模式] 开始扫描多站官方原生实时 RSS 订阅流...")
         total_downloaded = 0
         target_keys = target_keys or config.RSS_FEEDS.keys()
 
@@ -220,18 +236,24 @@ class BBCResourceDownloader:
                     link = item.find("link").text if item.find("link") is not None else ""
                     pub_date_str = item.find("pubDate").text if item.find("pubDate") is not None else ""
 
+                    if not pub_date_str:
+                        for child in item:
+                            if child.tag.endswith('date'):
+                                pub_date_str = child.text
+                                break
+
                     status = self._save_article(name, title, link, pub_date_str, url_log)
                     if status == "success":
                         total_downloaded += 1
             except Exception as e:
-                logger.error(f"实时增量同步异常 [频道: {name}]: {e}")
+                logger.error(f"多站实时增量同步异常 [频道: {name}]: {e}")
 
         print(f"增量同步完成，成功隔离落盘 {total_downloaded} 篇全新文章")
 
     def download_history(self, target_keys=None, start_year=2020, end_year=None):
         if end_year is None:
             end_year = datetime.now().year
-        logger.info(f"======= 触发历史全量收割任务 (卡尺: {start_year} - {end_year}) =======")
+        logger.info(f"======= 触发多站历史区间全量收割 (卡尺: {start_year} - {end_year}) =======")
         print(f"[历史收割模式] 正在检索历史快照线索 (时间卡尺: {start_year} - {end_year})...")
         from_timestamp = f"{start_year}0101000000"
         to_timestamp = f"{end_year}1231235959"
@@ -288,9 +310,9 @@ class BBCResourceDownloader:
                             self._write_log(failed_log, snapshot_url)
 
             except Exception as e:
-                logger.error(f"版块历史清洗出现致命崩溃: {e}")
+                logger.error(f"多站历史归档清洗发生异常崩溃: {e}")
 
-        logger.info("指定区间历史全量收割大任务安全合拢")
+        logger.info("多站指定历史大资产区间收割大任务安全合拢")
 
     def retry_failed_snapshots(self, target_keys=None):
         logger.info("======= 触发损坏节点定点重试修复主任务 =======")
