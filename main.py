@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 main.py: 多站自适应综合控制面板入口
-支持本地终端直观交互选择，与 Linux 服务器命令行参数自动化隐式部署
+已确保全文本纯净输出，无任何非标特殊符号
 """
 
 import argparse
@@ -12,7 +12,7 @@ import config
 
 
 def parse_cli_args():
-    """解析命令行参数，供自动化脚本或服务器 Cron Job 定时触发"""
+    """解析命令行参数"""
     current_year = datetime.now().year
     parser = argparse.ArgumentParser(description="多轨多站自愈式外刊内容资产收割底座")
     
@@ -26,11 +26,11 @@ def parse_cli_args():
     parser.add_argument(
         "--feeds", 
         nargs="+", 
-        help="指定需要的专栏标识符，如 bbc_english_technology time_english_top (不传默认全选大矩阵)"
+        help="指定需要的专栏标识符"
     )
     
-    parser.add_argument("--start", type=int, default=2020, help="历史模式起始年份 (默认: 2020)")
-    parser.add_argument("--end", type=int, default=current_year, help=f"历史模式结束年份 (默认: {current_year})")
+    parser.add_argument("--start", type=int, default=2020, help="历史模式起始年份")
+    parser.add_argument("--end", type=int, default=current_year, help="历史模式结束年份")
     
     return parser.parse_args()
 
@@ -78,7 +78,7 @@ def select_feeds_interactively():
     print("==================================================")
     
     try:
-        user_input = input("请选择需要的版块序号 (多个请用空格隔开，如 '1 6 10'): ").strip()
+        user_input = input("请选择需要的版块序号 (多个请用空格隔开): ").strip()
         if not user_input or user_input == "0":
             return None
             
@@ -100,21 +100,18 @@ def main():
     args = parse_cli_args()
     
     if args.mode:
-        # 参数隐式启动模式
         mode = args.mode
         target_feeds = args.feeds
         start_year = args.start
         end_year = args.end
         print(f"多站参数解析成功: 正在启动自动化命令行任务 -> {mode.upper()}")
     else:
-        # 交互回显启动模式
         mode, start_year, end_year = show_interactive_menu()
         if mode in ["latest", "history"]:
             target_feeds = select_feeds_interactively()
         else:
             target_feeds = None
 
-    # 分发执行赛道
     if mode == "latest":
         engine.sync_latest(target_keys=target_feeds)
     elif mode == "history":

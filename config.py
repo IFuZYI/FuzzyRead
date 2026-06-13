@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 """
 config.py: 中央配置文件
-集中管理下载根路径变量、多站 RSS 订阅矩阵、全局伪装头及各媒体 CSS 核心容器白名单
+集中管理下载根路径、图片分辨率与画质压缩阈值、多站 RSS 订阅矩阵及各媒体选择器
+去除了所有非标准表情符号
 """
 
 import datetime
 
-# 🎯【新增全局路径控制卡尺】：支持相对路径（如 "articles"）或绝对路径（如 "E:/外刊资产库"）
-# 系统会自动创建该文件夹，并将各媒体专栏隔离存放在其下方
+# 资产物理解析存储大本营
 DOWNLOAD_BASE_DIR = "articles"
 
+# 图片画质压缩全局变量
+MAX_IMAGE_RESOLUTION = 720      # 图片长边不超过 720p（若原图小于 720p 则保持原样，绝不放大失真）
+IMAGE_QUALITY = 75              # JPEG 工业级压缩比（70-80是肉眼无损且体积压缩到极致的黄金区间）
 
-# 1. 全站原生 RSS 订阅源矩阵
+# 全站原生 RSS 订阅源矩阵
 RSS_FEEDS = {
     "bbc_chinese_simp": "https://feeds.bbci.co.uk/zhongwen/simp/rss.xml",
     "bbc_chinese_trad": "https://feeds.bbci.co.uk/zhongwen/trad/rss.xml",
@@ -27,7 +30,7 @@ RSS_FEEDS = {
     "time_english_top": "https://time.com/feed/"
 }
 
-# 2. 多站自适应 CSS 正文黄金容器选择器配置盘
+# 多站自适应 CSS 正文黄金容器选择器配置盘
 SITE_PARSER_CONFIGS = {
     "bbc": {
         "core_selectors": ["article", '[data-component="text-block"]'],
@@ -52,7 +55,7 @@ SITE_PARSER_CONFIGS = {
     }
 }
 
-# 3. 通用上游视音频/直播无文本 URL 物理阻断黑名单
+# 通用上游视音频/直播无文本 URL 物理阻断黑名单
 GLOBAL_URL_BLOCK_KEYWORDS = [
     '/videos/', '/audio/', 'sounds/play/', '/live/', 
     '/video/', '/podcasts/', '/audio-clips/'
