@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 config.py: 中央配置文件
-集中管理下载根路径、图片分辨率与画质压缩阈值、多站 RSS 订阅矩阵及各媒体选择器
-确保代码、注释中无任何非标准表情符号
+集中管理下载根路径、多站 RSS 订阅矩阵及各媒体富媒体解析特征指纹库
+已确保代码、注释中无任何非标准特殊表情符号
 """
 
-# 资产物理解析存储大本营
+# 资产物理解析存储大本营路径
 DOWNLOAD_BASE_DIR = "articles"
-
-# 图片画质压缩全局变量
-MAX_IMAGE_RESOLUTION = 720      # 图片长边不超过 720p（若原图小于 720p 则保持原样，绝不放大失真）
-IMAGE_QUALITY = 75              # JPEG 工业级压缩比（70-80是肉眼无损且体积压缩到极致的黄金区间）
 
 # 全站原生 RSS 订阅源矩阵
 RSS_FEEDS = {
@@ -31,7 +27,6 @@ RSS_FEEDS = {
 # 多站自适应 CSS 正文黄金容器选择器配置盘
 SITE_PARSER_CONFIGS = {
     "bbc": {
-        # 🎯 扩充选择器，确保完美兼容 bbc.com/sport/ 体育频道的正文骨架容器
         "core_selectors": ["article", '[data-component="text-block"]', '.story-body', '.main-article', '[class*="ArticleWrapper"]'],
         "paragraph_class_pattern": r'StyledParagraph|Paragraph|qa-story-body',
         "bad_sub_selectors": [
@@ -40,7 +35,7 @@ SITE_PARSER_CONFIGS = {
             '[class*="links-grid"]', 'aside', '.advert', '.commercial',
             '.gel-wrap', '.social-shares', '.sp-story-body__related-item'
         ],
-        "video_signals": ['toucan-player', 'bbcMediaPlayer', 'media-player-container', 'smp-video-layout', 'smpVideoElement']
+        "video_signals": []
     },
     "time": {
         "core_selectors": ["article", ".article-content", "#article-body", ".body-copy", "#main-content"],
@@ -51,7 +46,7 @@ SITE_PARSER_CONFIGS = {
             '.marketing-blurb', 'aside', 'script', 'style', '.advertisement',
             '.rail-advertinement', '.inline-article-advertinement'
         ],
-        "video_signals": ['jwplayer', 'video-player', 'brightcove', 'embed/video']
+        "video_signals": []
     }
 }
 

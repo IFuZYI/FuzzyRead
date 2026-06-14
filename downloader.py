@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 downloader.py: 多站通用大资产分布式 Markdown 归档收割状态机
-引入 io.BytesIO 内存缓冲区优化，彻底封杀任何磁盘临时读写造成的 I/O 阻塞，确保 0 卡顿
+全面重构全生命周期颗粒度诊断日志，打通增量同步、历史打卡账本、去重过滤雷达的每一处诊断足迹
 """
 
 import os
@@ -13,7 +13,6 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import requests
 from tqdm import tqdm
-from PIL import Image
 import config
 import utils
 
@@ -25,6 +24,7 @@ if not logger.handlers:
     log_base = os.path.abspath(config.DOWNLOAD_BASE_DIR)
     os.makedirs(log_base, exist_ok=True)
     
+    # 配置文件日志落盘物理路径
     file_handler = logging.FileHandler(os.path.join(log_base, "harvest_run.log"), encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s", "%Y-%m-%d %H:%M:%S")
@@ -32,8 +32,9 @@ if not logger.handlers:
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
 
+    # 配置控制台实时数据流流水账
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.WARNING)
+    console_handler.setLevel(logging.INFO) # 生产环境控制台默认仅吐出INFO以上级别，保持终端整洁，详细DEBUG沉淀在日志文件
     console_formatter = logging.Formatter("[%(levelname)s] %(message)s")
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
@@ -44,7 +45,7 @@ class BBCResourceDownloader:
     def __init__(self):
         self.seen_urls = set()
         os.makedirs(os.path.abspath(config.DOWNLOAD_BASE_DIR), exist_ok=True)
-        logger.info(f"多站全量收割底座启动 -> 根存储阵地设定为: {os.path.abspath(config.DOWNLOAD_BASE_DIR)}")
+        logger.info(f"工业级收割管理底座就绪 -> 大资产大本营绝对路径: {os.path.abspath(config.DOWNLOAD_BASE_DIR)}")
 
     def _get_feed_dir(self, feed_key):
         base_path = os.path.abspath(config.DOWNLOAD_BASE_DIR)
@@ -58,9 +59,15 @@ class BBCResourceDownloader:
         return success_log, failed_log, url_log
 
     def _load_log(self, log_path):
+        """高透视账本载入器"""
         if os.path.exists(log_path):
-            with open(log_path, "r", encoding="utf-8") as f:
-                return set(line.strip() for line in f if line.strip())
+            try:
+                with open(log_path, "r", encoding="utf-8") as f:
+                    lines = set(line.strip() for line in f if line.strip())
+                logger.debug(f"持久化账本同步载入成功, 规整提取历史痕迹 {len(lines)} 条 -> 账本路径: {log_path}")
+                return lines
+            except Exception as e:
+                logger.error(f"读取物理去重账本时遭遇意外硬盘损坏异常: {e} -> 异常路径: {log_path}")
         return set()
 
     def _write_log(self, log_path, data_str):
@@ -78,16 +85,20 @@ class BBCResourceDownloader:
                         f.write(line)
 
     def _request_with_retry(self, url, max_retries=3, initial_delay=2):
+        """带高细粒度重试痕迹的网络请求包装机"""
         delay = initial_delay
         for attempt in range(max_retries):
             try:
+                logger.debug(f"发起底层网络请求 (尝试第 {attempt+1}/{max_retries} 次) -> URL: {url}")
                 response = requests.get(url, headers=config.HEADERS, timeout=15)
                 if response.status_code in [502, 503, 504]:
+                    logger.warning(f"服务器返回瞬时崩溃状态码 {response.status_code}, 触发退避机制休眠 {delay} 秒...")
                     time.sleep(delay)
                     delay *= 2
                     continue
                 return response
-            except Exception:
+            except Exception as e:
+                logger.warning(f"网络套接字物理握手意外中断原因: {e}, 正在触发自愈重连...")
                 time.sleep(delay)
                 delay *= 2
         return None
@@ -122,78 +133,49 @@ class BBCResourceDownloader:
         now = datetime.now()
         return now.strftime("%Y%m%d"), now.strftime("%Y"), now.strftime("%m")
 
-    def _download_and_save_images(self, img_urls, article_folder_path):
-        """高清真图智能缩放与高画质内存级缓冲压缩状态机"""
-        if not img_urls:
-            return
-            
-        for idx, img_url in enumerate(img_urls):
-            try:
-                from utils import http_session
-                img_res = http_session.get(img_url, headers=config.HEADERS, timeout=10)
-                
-                if img_res.status_code == 200:
-                    # 🎯 【性能降维核心点】：直接在内存中开辟 BytesIO 二级管线包装原始网路流，零临时磁盘文件产生，彻底消除硬盘 I/O 阻塞
-                    input_buffer = io.BytesIO(img_res.content)
-                    image = Image.open(input_buffer)
-                    
-                    if image.mode in ("RGBA", "P"):
-                        image = image.convert("RGB")
-                        
-                    width, height = image.size
-                    max_limit = config.MAX_IMAGE_RESOLUTION
-                    
-                    if width > max_limit or height > max_limit:
-                        if width >= height:
-                            new_width = max_limit
-                            new_height = int(height * (max_limit / width))
-                        else:
-                            new_height = max_limit
-                            new_width = int(width * (max_limit / height))
-                            
-                        image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
-                        logger.debug(f"图片尺寸触发限制，全自动等比例缩放: {width}x{height} -> {new_width}x{new_height}")
-
-                    img_name = f"img_{idx}.jpg"
-                    img_path = os.path.join(article_folder_path, img_name)
-                    
-                    # 内存数据一次性冲刷写入，保持硬件级别的低温冷运行
-                    image.save(img_path, "JPEG", quality=config.IMAGE_QUALITY, optimize=True)
-                    
-                    # 显式关闭并释放内存计数器
-                    input_buffer.close()
-                    
-            except Exception as e:
-                logger.debug(f"打捞压缩现场插图由于网络或组件冲突扑空: {e}, URL: {img_url}")
-
     def _save_article(self, feed_key, title, link, pub_date_str, url_log_path):
-        """落盘状态机"""
-        if not link or link in self.seen_urls:
+        """全量状态追踪落盘引擎"""
+        if not link:
+            logger.debug(f"拦截：该item节点内Original Link超链接文字完全缺失，直接丢弃")
+            return "failed"
+            
+        if link in self.seen_urls:
+            # 🎯【高级新增诊断点】：明确将查重过滤器的动作吐出，方便观察系统是不是在全速过滤
+            logger.debug(f"去重雷达拦截成功 -> 该超链接完美命中持久化去重黑名单缓存，安全跳过: {link}")
             return "duplicate"
 
         link_lower = link.lower()
         if any(blocked_kw in link_lower for blocked_kw in config.GLOBAL_URL_BLOCK_KEYWORDS):
+            logger.warning(f"最前端路由拦截 -> 嗅探到纯视音频、播客等无文字外刊节点，强行切断放行: {link}")
             return "duplicate"
 
         date_str, year_str, month_str = self._parse_pub_date(pub_date_str)
 
         feed_base_dir = self._get_feed_dir(feed_key)
-        safe_title = utils.clean_filename(title)
-        article_folder_name = f"{date_str}_{safe_title}"
-        article_folder_path = os.path.join(feed_base_dir, year_str, month_str, article_folder_name)
+        dir_path = os.path.join(feed_base_dir, year_str, month_str)
         
-        file_path = os.path.join(article_folder_path, f"{article_folder_name}.md")
+        safe_title = utils.clean_filename(title)
+        filename = f"{date_str}_{safe_title}.md"
+        file_path = os.path.join(dir_path, filename)
 
         if os.path.exists(file_path):
+            logger.debug(f"物理文件双向对齐拦截 -> 检测到本地物理硬盘已存在相同名称的.md文件，自动记账并补齐账本: {filename}")
             self.seen_urls.add(link)
             self._write_log(url_log_path, link)
             return "duplicate"
 
-        full_text, img_urls = utils.scrape_full_text_and_images(link, feed_key)
+        # 调度自适应解密引擎提取绝对文本
+        logger.debug(f"正在调取自适应策略流拉取并清洗该网页核心容器内容 -> Title: {title}")
+        full_text = utils.scrape_full_text(link, feed_key)
+
+        # 如果被 utils.py 内部的 HARD_MELTDOWN_SELECTORS 实体拦截返回了空
+        if not full_text:
+            logger.debug(f"utils清洗阶段返回空，该链接已被富媒体精确拦截器不予考虑，或者请求失败: {link}")
+            return "failed"
 
         length_threshold = 50 if "chinese" in feed_key else 150
         if len(full_text) > length_threshold:
-            os.makedirs(article_folder_path, exist_ok=True)
+            os.makedirs(dir_path, exist_ok=True)
             
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(f"# {title}\n\n")
@@ -203,23 +185,29 @@ class BBCResourceDownloader:
                 f.write("---\n\n")
                 f.write(full_text)
             
-            self._download_and_save_images(img_urls, article_folder_path)
-            
             self.seen_urls.add(link)
             self._write_log(url_log_path, link)
-            logger.info(f"一文一园打包完美收割入库: {article_folder_name} [已无损压缩 {len(img_urls)} 张高清真图]")
+            logger.info(f"纯净 Markdown 新资产成功分类入库: {filename} [专栏: {feed_key}]")
             return "success"
-            
-        return "failed"
+        else:
+            # 🎯【高级新增诊断点】：字数不够时的定点爆破警告日志
+            logger.warning(f"图文净化卡尺拦截 -> 该网页清洗后的真实字数仅为 {len(full_text)} 字符，未达到精读标准线阈值({length_threshold})，不予落盘生成文件: {link}")
+            return "failed"
 
     def process_single_snapshot(self, feed_key, snapshot_url, url_log_path):
+        """单快照数据节点打捞诊断流"""
+        logger.debug(f"正在发起快照全量解析任务 -> Snapshot: {snapshot_url}")
         xml_res = self._request_with_retry(snapshot_url)
         if xml_res is None or xml_res.status_code != 200:
+            status_code = xml_res.status_code if xml_res else "Timeout"
+            logger.warning(f"历史档案馆节点拒绝响应, 状态码: {status_code} -> 快照URL: {snapshot_url}")
             return False
 
         try:
             root = ET.fromstring(xml_res.content)
             items = root.findall(".//item")
+            logger.debug(f"快照 XML 流结构合法，成功解析出 {len(items)} 个待审计的新闻 item 节点流")
+            
             snapshot_download_count = 0
             snapshot_duplicate_count = 0
 
@@ -241,11 +229,12 @@ class BBCResourceDownloader:
                     elif status == "duplicate":
                         snapshot_duplicate_count += 1
 
+            logger.debug(f"该历史快照流打捞扫描审计完毕 -> 净斩获全新文章: {snapshot_download_count} 篇，过滤重复: {snapshot_duplicate_count} 篇")
             if snapshot_download_count > 0 or snapshot_duplicate_count > 0:
                 return True
             return False
         except Exception as e:
-            logger.error(f"解析多站历史 XML 快照崩溃: {e}")
+            logger.error(f"解析历史快照 XML 核心树时发生严重语法破损崩溃: {e} -> 异常快照: {snapshot_url}")
             return False
 
     def sync_latest(self, target_keys=None):
@@ -256,25 +245,31 @@ class BBCResourceDownloader:
 
         for name in target_keys:
             if name not in config.RSS_FEEDS:
+                logger.warning(f"选品页过滤 -> 输入了不在全站订阅矩阵中的非标频道键名，自动略过: {name}")
                 continue
             
             url = config.RSS_FEEDS[name]
             success_log, failed_log, url_log = self._get_log_paths(name)
             
+            # 安全对齐查重缓存
             channel_urls = self._load_log(url_log)
             self.seen_urls.update(channel_urls)
             
             dest_dir = self._get_feed_dir(name)
             print(f"正在读取历史已载记录 {len(channel_urls)} 条，同步最新内容至根目录: {dest_dir}")
+            logger.debug(f"正在连通原生实时 RSS 订阅网关 -> 频道: {name} -> 订阅源: {url}")
             
             try:
                 response = requests.get(url, headers=config.HEADERS, timeout=15)
                 if response.status_code != 200:
+                    logger.error(f"无法同步频道 [{name}], 官方服务器网关拒绝响应, 状态码: {response.status_code}")
                     continue
 
                 root = ET.fromstring(response.content)
                 items = root.findall(".//item")
+                logger.debug(f"最新官方实时 RSS 树提取完毕，在内存中发现 {len(items)} 条突发增量线索，启动流水线逐个对比...")
 
+                channel_download_count = 0
                 for item in items:
                     title = item.find("title").text if item.find("title") is not None else "Untitled"
                     link = item.find("link").text if item.find("link") is not None else ""
@@ -288,9 +283,12 @@ class BBCResourceDownloader:
 
                     status = self._save_article(name, title, link, pub_date_str, url_log)
                     if status == "success":
+                        channel_download_count += 1
                         total_downloaded += 1
+                
+                logger.info(f"频道 [{name}] 增量周期扫描任务圆满大合拢，本轮实际斩获全新资产 {channel_download_count} 篇")
             except Exception as e:
-                logger.error(f"多站实时增量同步异常 [频道: {name}]: {e}")
+                logger.error(f"多站实时增量同步出现致命异常 [故障频道: {name}]: {e}")
 
         print(f"增量同步完成，成功隔离落盘 {total_downloaded} 篇全新文章")
 
@@ -298,7 +296,7 @@ class BBCResourceDownloader:
         if end_year is None:
             end_year = datetime.now().year
         logger.info(f"======= 触发多站历史区间全量收割 (卡尺: {start_year} - {end_year}) =======")
-        print(f"[历史收割模式] 正在检索历史快照线索 (时间卡尺: {start_year} - {end_year})...")
+        print(f"[历史收割模式] 正在检索历史快照线留存 (时间卡尺: {start_year} - {end_year})...")
         from_timestamp = f"{start_year}0101000000"
         to_timestamp = f"{end_year}1231235959"
 
@@ -317,6 +315,7 @@ class BBCResourceDownloader:
             processed_snapshots = self._load_log(success_log)
             
             print(f"载入已下载文章 URL 记录 {len(channel_urls)} 条。当前收割版块: [{name}] -> 存储阵地: {dest_dir}")
+            logger.debug(f"正在向互联网档案馆 CDX 接口查询专栏历史脉络 -> 专栏: {name}")
 
             archive_api = (
                 f"{config.WAYBACK_CDX_URL}?url={rss_url}&output=json"
@@ -325,22 +324,26 @@ class BBCResourceDownloader:
 
             res = self._request_with_retry(archive_api)
             if res is None or res.status_code != 200:
+                status_code = res.status_code if res else "Timeout"
+                logger.error(f"档案馆大区数据返回限制错误: {status_code}，专栏线索中断，自动切入下一版块: {name}")
                 print(f"档案馆接口响应限制，版块 [{name}] 检索中断，自动切入下一版块")
                 continue
 
             try:
                 data = res.json()
                 if len(data) <= 1:
+                    logger.warning(f"档案馆反馈此专栏在 {start_year}-{end_year} 区间内没有留下任何时间胶囊快照: {name}")
                     continue
 
                 snapshot_urls = [
                     f"http://web.archive.org/web/{row[1]}/{rss_url}"
                     for row in data[1:]
                 ]
-                print(f"订阅源 [{name}] 成功锁定 {len(snapshot_urls)} 个历史快照流节点")
+                logger.info(f"订阅源 [{name}] 成功在档案馆图纸中锁定历史快照流节点 {len(snapshot_urls)} 个，开始拉取状态机...")
 
                 for snapshot_url in tqdm(snapshot_urls, desc=f"扫描进度 [{name}]"):
                     if snapshot_url in processed_snapshots:
+                        logger.debug(f"快照对齐账目：检测到该快照节点已在历史大任务中成功打卡处理过，安全跳过: {snapshot_url}")
                         continue
 
                     success = self.process_single_snapshot(name, snapshot_url, url_log)
@@ -354,6 +357,40 @@ class BBCResourceDownloader:
                             self._write_log(failed_log, snapshot_url)
 
             except Exception as e:
-                logger.error(f"多站历史归档清洗发生异常崩溃: {e}")
+                logger.error(f"多站历史归档清洗发生突发性异常崩溃: {e} -> 故障版块: {name}")
 
         print("多站指定历史大资产区间收割大任务安全合拢")
+
+    def retry_failed_snapshots(self, target_keys=None):
+        logger.info("======= 触发损毁节点定点重试修复主任务 =======")
+        print("[失败节点修复主任务启动] 开始跨模块遍历损毁快照账本...")
+        target_keys = target_keys or config.RSS_FEEDS.keys()
+
+        for name in target_keys:
+            if name not in config.RSS_FEEDS:
+                continue
+            
+            success_log, failed_log, url_log = self._get_log_paths(name)
+            failed_snapshots = self._load_log(failed_log)
+
+            if not failed_snapshots:
+                logger.debug(f"版块 [{name}] 的坏账本 snapshot_failed.log 盘点完毕：完全清白，无任何历史损毁节点")
+                continue
+
+            print(f"版块 [{name}] 账本内存在 {len(failed_snapshots)} 个损毁快照，开始定点修复...")
+            logger.info(f"定点账本重修复流激活 -> 版块 [{name}] -> 抓到历史损毁打卡点 {len(failed_snapshots)} 个，准备全力强攻...")
+            
+            processed_snapshots = self._load_log(success_log)
+            channel_urls = self._load_log(url_log)
+            self.seen_urls.update(channel_urls)
+
+            for snapshot_url in tqdm(list(failed_snapshots), desc=f"修复进度 [{name}]"):
+                success = self.process_single_snapshot(name, snapshot_url, url_log)
+
+                if success:
+                    self._write_log(success_log, snapshot_url)
+                    processed_snapshots.add(snapshot_url)
+                    self._remove_from_failed_log(failed_log, snapshot_url)
+                    logger.info(f"修复大捷！损毁节点定点攻克突围成功，账本已安全复原：{snapshot_url}")
+
+        print("失败节点定点重试任务执行完毕")
