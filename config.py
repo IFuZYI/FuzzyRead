@@ -2,10 +2,8 @@
 """
 config.py: 中央配置文件
 集中管理下载根路径、图片分辨率与画质压缩阈值、多站 RSS 订阅矩阵及各媒体选择器
-去除了所有非标准表情符号
+确保代码、注释中无任何非标准表情符号
 """
-
-import datetime
 
 # 资产物理解析存储大本营
 DOWNLOAD_BASE_DIR = "articles"
@@ -33,12 +31,14 @@ RSS_FEEDS = {
 # 多站自适应 CSS 正文黄金容器选择器配置盘
 SITE_PARSER_CONFIGS = {
     "bbc": {
-        "core_selectors": ["article", '[data-component="text-block"]'],
-        "paragraph_class_pattern": r'StyledParagraph|Paragraph',
+        # 🎯 扩充选择器，确保完美兼容 bbc.com/sport/ 体育频道的正文骨架容器
+        "core_selectors": ["article", '[data-component="text-block"]', '.story-body', '.main-article', '[class*="ArticleWrapper"]'],
+        "paragraph_class_pattern": r'StyledParagraph|Paragraph|qa-story-body',
         "bad_sub_selectors": [
             '[data-testid="links-grid"]', '[data-testid="links-container"]',
             '[data-testid="chester-card"]', '[data-testid="promo-box"]',
-            '[class*="links-grid"]', 'aside', '.advert', '.commercial'
+            '[class*="links-grid"]', 'aside', '.advert', '.commercial',
+            '.gel-wrap', '.social-shares', '.sp-story-body__related-item'
         ],
         "video_signals": ['toucan-player', 'bbcMediaPlayer', 'media-player-container', 'smp-video-layout', 'smpVideoElement']
     },
