@@ -27,6 +27,7 @@ import ArticleImage from './components/ArticleImage';
 import { getApiUrl } from './utils/api';
 import { filterArticles, paginateArticles, totalPages } from './utils/articleFilters';
 import { loadAISettings, loadPreferences, saveAISettings, savePreferences } from './utils/preferences';
+import { AsyncTaskQueue, wait } from './utils/asyncQueue';
 
 // Cookie Helpers for API Key persistence
 function setCookie(name: string, value: string, days = 365) {
@@ -120,7 +121,23 @@ const INITIAL_PREFERENCE: ReadingPreferences = {
   voiceGender: 'female',
 };
 
-// Helper to render text with Markdown bold (**bold**) support
+function normalizeTitleTranslation(raw: unknown): string {
+  if (typeof raw !== 'string') return '';
+  let text = raw.trim();
+  // Remove model wrappers such as :::writing{...} ... ::: and Markdown fences.
+  text = text.replace(/^\s*:::writing\{[^}]*\}\s*/i, '');
+  text = text.replace(/\s*:::[\s\S]*$/i, '').trim();
+  text = text.replace(/^```(?:markdown|text)?\s*/i, '').replace(/\s*```$/i, '').trim();
+  // A title translation should be one title, not an explanation or a generated
+  // document. Keep the first non-empty line if the model added commentary.
+  const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (lines.length > 1) {
+    const first = lines[0].replace(/^(标题翻译|译文|Translation)\s*[:：]\s*/i, '').trim();
+    if (/^(为什么|what|the|a |an |“|"|'|[A-Z\u4e00-\u9fff])/.test(first)) text = first;
+  }
+  return text.replace(/^标题翻译\s*[:：]\s*/i, '').replace(/^\*\*(.*?)\*\*$/, '$1').trim();
+}
+
 const renderTextWithBold = (text: string) => {
   if (!text) return null;
   // Clean up potential whitespace surrounding bold content inserted by translation engines
@@ -222,6 +239,8 @@ export default function App() {
 
   // Title translations map: articleId -> translation text status
   const [translatedTitles, setTranslatedTitles] = useState<Record<string, { text: string; loading: boolean; error?: string }>>({});
+  const titleTranslationQueueRef = useRef(new AsyncTaskQueue(2));
+  const titleTranslationCacheRef = useRef(new Map<string, string>());
   
   // Concurrent full-text translation active progress
   const [bulkTranslating, setBulkTranslating] = useState(false);
@@ -645,6 +664,7 @@ export default function App() {
 
   // Run single title translation
   const translateTitle = async (articleId: string, titleText: string) => {
+    if (!titleText.trim()) return;
     setTranslatedTitles(prev => ({
       ...prev,
       [articleId]: { text: '', loading: true }
@@ -664,28 +684,48 @@ export default function App() {
     }
 
     try {
-      const response = await fetch(getApiUrl('/api/translate'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: titleText,
-          engine: settings.engine,
-          model: settings.model,
-          apiKey: activeKey,
-          baseUrl: activeBase
-        })
-      });
-
-      if (!response.ok) {
-        const errJSON = await response.json();
-        throw new Error(errJSON.error || 'Translation network error');
+      const cacheKey = `${settings.engine}:${settings.model}:${titleText.trim()}`;
+      const cached = titleTranslationCacheRef.current.get(cacheKey);
+      if (cached) {
+        setTranslatedTitles(prev => ({ ...prev, [articleId]: { text: cached, loading: false } }));
+        return;
       }
+      await titleTranslationQueueRef.current.add(async () => {
+        let response: Response | null = null;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+          response = await fetch(getApiUrl('/api/translate'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              text: titleText,
+              engine: settings.engine,
+              model: settings.model,
+              apiKey: activeKey,
+              baseUrl: activeBase,
+              purpose: 'title',
+            })
+          });
+          if (response.status !== 429 && response.status !== 502 && response.status !== 503) break;
+          if (attempt < 2) await wait(600 * (attempt + 1));
+        }
 
-      const resData = await response.json();
-      setTranslatedTitles(prev => ({
-        ...prev,
-        [articleId]: { text: resData.translation, loading: false }
-      }));
+        if (!response) throw new Error('翻译请求未建立');
+        if (!response.ok) {
+          const errJSON = await response.json();
+          const error = new Error(errJSON.error || 'Translation network error') as Error & { status?: number };
+          error.status = response.status;
+          throw error;
+        }
+
+        const resData = await response.json();
+        const translation = normalizeTitleTranslation(resData.translation);
+        if (!translation) throw new Error('上游返回了空标题翻译');
+        titleTranslationCacheRef.current.set(cacheKey, translation);
+        setTranslatedTitles(prev => ({
+          ...prev,
+          [articleId]: { text: translation, loading: false }
+        }));
+      });
     } catch (err: any) {
       setTranslatedTitles(prev => ({
         ...prev,

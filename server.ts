@@ -164,10 +164,8 @@ function getTitleZh(title: string): string {
     }
   }
   
-  // Simple word substitutions/heuristics if not matched:
-  if (normalized.includes("greenhouse") || normalized.includes("climate")) return "气候变化与环境研究";
-  if (normalized.includes("artificial intelligence") || normalized.includes("ai")) return "人工智能前沿研究";
-  
+  // Titles without a curated translation are translated on demand by the reader.
+  // Never show a topical placeholder as if it were a real translation.
   return "";
 }
 
@@ -574,15 +572,26 @@ app.post("/api/ai/models", async (req, res) => {
   }
 });
 
+function normalizeTranslationOutput(raw: unknown, purpose: unknown): string {
+  if (typeof raw !== "string") return "";
+  let text = raw.trim();
+  if (purpose !== "title") return text;
+  text = text.replace(/^\s*:::writing\{[^}]*\}\s*/i, '');
+  text = text.replace(/\s*:::[\s\S]*$/i, '').trim();
+  text = text.replace(/^```(?:markdown|text)?\s*/i, '').replace(/\s*```$/i, '').trim();
+  const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (lines.length > 1) text = lines[0];
+  return text.replace(/^(标题翻译|译文|Translation)\s*[:：]\s*/i, '').replace(/^\*\*(.*?)\*\*$/, '$1').trim();
+}
+
 // Translation routing Proxy & Fallback free translator
 app.post("/api/translate", async (req, res) => {
-  const { text, engine, apiKey, baseUrl, model } = req.body;
+  const { text, engine, apiKey, baseUrl, model, purpose } = req.body;
   
   if (!text || !text.trim()) {
     return res.status(400).json({ error: "No text provided for translation." });
   }
 
-  // Fallback or Cloud Translate: If engine is 'free'
   if (engine === 'free') {
     const { azureTranslatorKey, azureTranslatorRegion, googleCloudTtsKey } = req.body;
     try {
@@ -831,7 +840,7 @@ app.post("/api/translate", async (req, res) => {
       translatedText = resData.choices?.[0]?.message?.content || '';
     }
 
-    res.json({ translation: translatedText.trim() });
+    res.json({ translation: normalizeTranslationOutput(translatedText, purpose) });
   } catch (error: any) {
     console.error("AI deep translation failed:", error);
     res.status(500).json({ error: `AI Translation failure: ${error.message || 'Unknown network error. Please verify your custom Endpoint URL and Key.'}` });
