@@ -1,8 +1,12 @@
 # FuzyRead · 外刊精读平台
 
-一套完整的英语精读工作流：Python 采集器抓取外刊 RSS 全文，Express 提供文章/翻译/词典/朗读 API，React 前端负责阅读，`/admin` 后台负责运维与定时更新。界面遵循 Apple 设计语言。
+一套完整的英语精读工作流：Python 采集器抓取外刊 RSS 全文，Express 提供文章、翻译、词典、朗读 API，React 前端负责阅读，`/admin` 后台负责运维与定时更新。界面遵循 Apple 设计语言。
 
-线上部署：`news.fuzy.site`（Nginx 反代）
+## 在线 Demo
+
+访问：**[news.fuzy.site](https://news.fuzy.site)**
+
+`news.fuzy.site` 是项目在线 Demo，用于展示 FuzyRead 的阅读端、采集后台和相关功能。Demo 的文章数据、服务可用性和自动采集状态可能随时变化，不作为生产服务 SLA 或数据备份来源。
 
 ---
 
@@ -17,7 +21,7 @@
 - [环境变量](#环境变量)
 - [API](#api)
 - [测试](#测试)
-- [生产部署](#生产部署)
+- [Demo 部署说明](#demo-部署说明)
 - [故障排查](#故障排查)
 
 ---
@@ -338,18 +342,32 @@ Node 测试用内置 `node --test`，前端工具测试用 Vitest + jsdom，Pyth
 
 ---
 
-## 生产部署
+## Demo 部署说明
+
+当前线上站点为 Demo：
+
+```text
+https://news.fuzy.site
+```
+
+Demo 通过 HTTPS 和反向代理访问，主要用于功能演示。Demo 环境中的文章、日志、任务状态和调度配置均属于运行时数据，不纳入代码仓库，也不保证长期保留。
+
+如需在自己的服务器部署 Demo 或自建实例：
 
 ```bash
+npm install
+npm run harvester:install
+cp .env.example .env
+# 编辑 .env，设置 ADMIN_PASSWORD、APP_URL 和必要的服务商 Key
 npm run build
 NODE_ENV=production npm start
 ```
 
-必备条件：
+建议使用 Nginx 或其他 HTTPS 反向代理转发到 Node 的 3000 端口，并设置：
 
-- **HTTPS**：Cookie 带 `Secure`，纯 HTTP 下无法登录后台
-- **`TRUST_PROXY=1`**：否则登录限流对所有访客共用一个计数桶
-- **`ADMIN_PASSWORD` 用强密码**：后台能触发任意采集任务
+- **HTTPS**：生产模式的管理员 Cookie 带 `Secure`
+- **`TRUST_PROXY=1`**：部署在一层反向代理后时，恢复真实客户端 IP，保证登录限流按用户生效
+- **强 `ADMIN_PASSWORD`**：后台可以启动采集任务、修改订阅源和调度配置
 
 Nginx 参考配置：
 
@@ -371,7 +389,7 @@ location / {
 
 | 现象 | 原因 | 处理 |
 | --- | --- | --- |
-| `/admin` 登录一直 401 | `ADMIN_PASSWORD` 未设置或密码不符 | 检查 `.env` 后重启 |
+| Demo 访问后登录不了 `/admin` | Demo 可能未开放管理操作，或管理员密码未配置 | 仅在自部署实例中配置 `.env` 的 `ADMIN_PASSWORD`；不要在 README 或公开仓库中写入真实密码 |
 | 生产环境登录后立刻掉登录态 | 走的是 HTTP，Secure Cookie 未回传 | 配置 HTTPS |
 | 登录返回 429 | 触发限流 | 等 15 分钟，或重启进程清空计数 |
 | 启动任务返回 409 | 已有任务在跑，或找不到 Python 解释器 | 看错误详情；检查 `PYTHON_BIN` |
