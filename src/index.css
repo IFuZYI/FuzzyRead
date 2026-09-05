@@ -1,0 +1,212 @@
+/* ============================================================================
+   FuzyRead — Apple-inspired design system
+   Reference: apple.com — SF Pro typography, binary light/dark rhythm,
+   single blue accent, sparse soft shadows, tight negative tracking.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* --- Typography: SF Pro first, Inter as the closest cross-platform fallback --- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Helvetica Neue", "Inter", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo,
+    Monaco, Consolas, monospace;
+
+  /* Reader body-font preferences (user selectable) */
+  --font-times: "Times New Roman", "Times", Georgia, serif;
+  --font-calibri: "Calibri", "Candara", "Segoe UI", sans-serif;
+  --font-inter: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+
+  /* --- Apple neutral ramp: overrides Tailwind's gray so existing utilities
+         inherit apple.com's exact secondary-text and hairline-border tones --- */
+  --color-gray-50: #fbfbfd;
+  --color-gray-100: #f5f5f7;
+  --color-gray-150: #ededf0;
+  --color-gray-200: #d2d2d7;
+  --color-gray-300: #c7c7cc;
+  --color-gray-400: #86868b;
+  --color-gray-500: #6e6e73;
+  --color-gray-600: #515154;
+  --color-gray-700: #424245;
+  --color-gray-800: #333336;
+  --color-gray-900: #1d1d1f;
+  --color-gray-950: #000000;
+
+  /* Slate/stone aliases resolve to the same ramp — one neutral language only */
+  --color-slate-50: #fbfbfd;
+  --color-slate-100: #f5f5f7;
+  --color-slate-200: #d2d2d7;
+  --color-slate-400: #86868b;
+  --color-slate-500: #6e6e73;
+  --color-slate-600: #515154;
+  --color-slate-900: #1d1d1f;
+  --color-slate-950: #000000;
+  --color-stone-50: #fbfbfd;
+  --color-stone-100: #f5f5f7;
+
+  /* --- Semantic tokens --- */
+  --color-accent: #0071e3;        /* Apple Blue — interactive elements only */
+  --color-accent-hover: #0077ed;
+  --color-accent-link: #0066cc;   /* text-level link on light surfaces */
+  --color-accent-bright: #2997ff; /* link on dark surfaces */
+  --color-ink: #1d1d1f;
+  --color-ink-soft: #6e6e73;
+  --color-ink-muted: #86868b;
+  --color-cream: #ffffff;
+  --color-sand: #f5f5f7;
+  --color-sand-hover: #ededf0;
+  --color-sand-border: #d2d2d7;
+  --color-sand-accent: #d2d2d7;
+  --color-sand-highlight: #f5f5f7;
+  --color-sand-dark: #1d1d1f;
+  --color-sage: #0071e3;
+  --color-sage-dark: #0077ed;
+  --color-selection: rgba(0, 113, 227, 0.16);
+
+  /* --- Radius: Apple keeps rectangles at 8-18px, pills at 980px --- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 12px;
+  --radius-3xl: 18px;
+
+  /* --- Elevation: one soft diffused studio shadow, or nothing --- */
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: 0 2px 14px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 3px 22px 0 rgba(0, 0, 0, 0.08);
+  --shadow-xl: 3px 5px 30px 0 rgba(0, 0, 0, 0.14);
+  --shadow-2xl: 3px 5px 40px 0 rgba(0, 0, 0, 0.22);
+
+  --animate-fade-in: fade-in 0.4s cubic-bezier(0.28, 0.11, 0.32, 1) forwards;
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.28, 0.11, 0.32, 1) forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Global canvas
+   ------------------------------------------------------------------------ */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1d1d1f;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.374px; /* Apple tracks tight at every size */
+}
+
+/* Apple's optical-size boundary: display faces above 20px run tighter still */
+h1, h2, h3 { letter-spacing: -0.02em; }
+h4, h5, h6 { letter-spacing: -0.015em; }
+
+/* ---------------------------------------------------------------------------
+   Apple glass navigation
+   ------------------------------------------------------------------------ */
+.apple-nav {
+  background-color: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.apple-nav-dark {
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Signature Apple pill CTA */
+.apple-pill {
+  border-radius: 980px;
+}
+
+/* Display headline: compressed line-height, machined feel */
+.apple-display {
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.apple-focus:focus-visible {
+  outline: 2px solid #0071e3;
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Dictionary word interaction
+   ------------------------------------------------------------------------ */
+.dict-word {
+  position: relative;
+  transition: background-color 0.18s ease, color 0.18s ease;
+  border-bottom: 1px solid rgba(0, 113, 227, 0.28);
+  padding: 0 0.05rem;
+  border-radius: 3px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dict-word:hover {
+  background-color: rgba(0, 113, 227, 0.1);
+  color: #1d1d1f;
+}
+
+.dict-word.active-word {
+  background-color: #0071e3 !important;
+  color: #ffffff !important;
+  border-bottom-color: #0071e3 !important;
+  border-radius: 5px;
+}
+
+/* ---------------------------------------------------------------------------
+   Selection & scrollbar
+   ------------------------------------------------------------------------ */
+::selection {
+  background-color: rgba(0, 113, 227, 0.18);
+  color: #1d1d1f;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 113, 227, 0.18);
+  color: #1d1d1f;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 980px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

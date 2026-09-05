@@ -1,0 +1,129 @@
+{
+  "site_configs": {
+    "bbc": {
+      "core_selectors": [
+        "article",
+        "[data-component=\"text-block\"]",
+        ".story-body",
+        ".main-article",
+        "[class*=\"ArticleWrapper\"]"
+      ],
+      "paragraph_class_pattern": "StyledParagraph|Paragraph|qa-story-body",
+      "bad_sub_selectors": [
+        "[data-testid=\"links-grid\"]",
+        "[data-testid=\"links-container\"]",
+        "[data-testid=\"chester-card\"]",
+        "[data-testid=\"promo-box\"]",
+        "[class*=\"links-grid\"]",
+        "aside",
+        ".advert",
+        ".commercial",
+        ".gel-wrap",
+        ".social-shares",
+        ".sp-story-body__related-item"
+      ],
+      "match": [
+        "bbc"
+      ]
+    },
+    "time": {
+      "core_selectors": [
+        "article",
+        ".article-content",
+        "#article-body",
+        ".body-copy",
+        "#main-content"
+      ],
+      "paragraph_class_pattern": "paragraph|components|rich-text",
+      "bad_sub_selectors": [
+        ".newsletter-signup",
+        ".inline-sidebar",
+        ".branded-wrapper",
+        ".outbrain-wrapper",
+        ".social-share",
+        ".video-player-embed",
+        ".marketing-blurb",
+        "aside",
+        "script",
+        "style",
+        ".advertisement",
+        ".rail-advertisement",
+        ".inline-article-advertisement"
+      ],
+      "match": [
+        "time_",
+        "time.com"
+      ]
+    },
+    "generic": {
+      "match": [],
+      "core_selectors": [
+        "article",
+        "[itemprop=\"articleBody\"]",
+        ".article-body",
+        ".article__body",
+        ".post-content",
+        ".entry-content",
+        "main",
+        "#content"
+      ],
+      "paragraph_class_pattern": "paragraph|article|body|content|text",
+      "bad_sub_selectors": [
+        "aside",
+        "nav",
+        "footer",
+        "form",
+        "script",
+        "style",
+        "noscript",
+        ".advert",
+        ".advertisement",
+        ".ad",
+        ".ads",
+        ".social",
+        ".social-share",
+        ".share",
+        ".newsletter",
+        ".newsletter-signup",
+        ".related",
+        ".related-articles",
+        ".recommended",
+        ".promo",
+        ".subscribe",
+        ".paywall",
+        ".comments",
+        "[class*=\"advert\"]",
+        "[class*=\"promo\"]",
+        "[class*=\"related\"]",
+        "[class*=\"newsletter\"]"
+      ]
+    }
+  },
+  "default_site_profile": "generic",
+  "hard_meltdown_tags": [
+    "table",
+    "iframe",
+    "video",
+    "embed",
+    "object"
+  ],
+  "ghost_image_patterns": [
+    "data:image",
+    "placeholder",
+    "trans\\.gif",
+    "space\\.gif",
+    "/1x1/",
+    "analytics",
+    "tracking",
+    "dot\\.gif"
+  ],
+  "global_url_block_keywords": [
+    "/videos/",
+    "/audio/",
+    "sounds/play/",
+    "/live/",
+    "/video/",
+    "/podcasts/",
+    "/audio-clips/"
+  ]
+}

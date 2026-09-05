@@ -1,0 +1,12 @@
+{
+  "bbc_chinese_simp": "https://feeds.bbci.co.uk/zhongwen/simp/rss.xml",
+  "bbc_chinese_trad": "https://feeds.bbci.co.uk/zhongwen/trad/rss.xml",
+  "bbc_english_top": "http://feeds.bbci.co.uk/news/rss.xml",
+  "bbc_english_world": "http://feeds.bbci.co.uk/news/world/rss.xml",
+  "bbc_english_business": "http://feeds.bbci.co.uk/news/business/rss.xml",
+  "bbc_english_technology": "http://feeds.bbci.co.uk/news/technology/rss.xml",
+  "bbc_english_science": "http://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+  "bbc_english_health": "http://feeds.bbci.co.uk/news/health/rss.xml",
+  "bbc_english_arts": "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+  "time_english_top": "https://time.com/feed/"
+}

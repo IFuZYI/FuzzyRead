@@ -1,15 +1,33 @@
-# Ignore generated article outputs
-articles/
+# Node / build output
+node_modules/
+dist/
+*.tsbuildinfo
 
-bbc_harvest_run.log
+# Environment and secrets
+.env
+.env.*
+!.env.example
 
-# Python virtualenv and caches
+# Python runtime
+.venv/
 venv/
 __pycache__/
 *.pyc
 
-# Editor/OS
-.DS_Store
+# Runtime data: keep empty directory markers, never commit content
+/data/articles/*
+!/data/articles/.gitkeep
+/data/logs/*
+!/data/logs/.gitkeep
+/data/state/*
+!/data/state/.gitkeep
+debug.log
+*.log
 
-# untrack_generated.bat
-untrack_generated.bat
+# Archived / local-only artifacts
+archive/
+.hermes/
+.vscode/
+
+# Editor / OS
+.DS_Store

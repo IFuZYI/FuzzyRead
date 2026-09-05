@@ -1,0 +1,6 @@
+{
+  "name": "FuzyRead",
+  "description": "An interactive bilingual application for deep reading of English articles from BBC and Time, featuring a touch-optimized dictionary helper and AI dual-translation engines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
