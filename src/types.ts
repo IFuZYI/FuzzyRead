@@ -24,6 +24,12 @@ export interface ProcessedArticle extends ArticleMeta {
 
 export type TranslationEngine = 'free' | 'openai' | 'gemini' | 'deepseek' | 'other';
 
+export interface AIModelOption {
+  id: string;
+  name?: string;
+  ownedBy?: string;
+}
+
 export interface AISettings {
   engine: TranslationEngine;
   model: string;

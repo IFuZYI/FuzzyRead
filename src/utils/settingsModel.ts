@@ -5,7 +5,7 @@ export const DEFAULT_MODELS: Record<TranslationEngine, string[]> = {
   openai: ['gpt-4o', 'gpt-4o-mini', 'o1-mini'],
   gemini: ['gemini-3.5-flash', 'gemini-3.1-pro-preview'],
   deepseek: ['deepseek-chat', 'deepseek-reasoner'],
-  other: ['custom-model'],
+  other: [],
 };
 
 export const DEFAULT_BASES: Record<TranslationEngine, string> = {
@@ -15,6 +15,19 @@ export const DEFAULT_BASES: Record<TranslationEngine, string> = {
   deepseek: 'https://api.deepseek.com',
   other: '',
 };
+
+export function normalizeOpenAIBaseUrl(input: string): string {
+  return input.trim().replace(/\/+$/, '').replace(/\/chat\/completions$/, '').replace(/\/models$/, '');
+}
+
+export function modelIdsFromResponse(payload: unknown): string[] {
+  if (!payload || typeof payload !== 'object') return [];
+  const data = (payload as { data?: unknown }).data;
+  if (!Array.isArray(data)) return [];
+  return data
+    .map(item => typeof item === 'string' ? item : (item && typeof item === 'object' && typeof (item as { id?: unknown }).id === 'string' ? (item as { id: string }).id : ''))
+    .filter(Boolean);
+}
 
 export const FONT_SIZES = [
   { label: '小', value: 'sm', class: 'text-sm' },

@@ -284,6 +284,22 @@ ALLOW_SERVER_KEY_PARAGRAPH_TTS=false
 
 访客在设置面板里填的 Key 只存在浏览器 localStorage，不上服务器。
 
+### AI 接口与模型配置
+
+段落翻译支持 OpenAI 兼容接口，因此可以接入 OpenAI、New API、One API、DeepSeek 代理、Ollama 兼容网关或其他提供 `/chat/completions` 与 `/models` 的服务。
+
+在右上角「设置」→「段落选项」中选择「自定义」，填写：
+
+| 配置项 | 说明 |
+| --- | --- |
+| Base URL | 上游 API 根地址，例如 `https://newapi.example.com/v1`；不要填写 `/chat/completions` |
+| API Key | 按上游要求填写，可为空 |
+| 模型 ID | 可以直接手写，例如 `gpt-4o`、`claude-3-5-sonnet`、`qwen-plus`、`deepseek-chat` |
+
+点击「拉取模型」后，FuzyRead 会请求 `<Base URL>/models`，兼容 OpenAI 模型列表格式。拉取成功后可以从列表选择模型，也可以继续手写未出现在列表中的模型 ID。模型请求使用 `POST <Base URL>/chat/completions` 和 `Authorization: Bearer <API Key>`。
+
+API Key 只从浏览器发送到 FuzyRead 后端，再由后端请求上游，不写入服务器配置、日志或 Git。服务端会拒绝明显的内网、localhost、metadata 和非 HTTP(S) 地址，避免模型拉取接口被用作 SSRF 代理。不同 New API 部署的鉴权、模型别名和渠道路由可能不同；如果上游不开放 `/models`，可以直接手写模型 ID。
+
 ---
 
 ## API
@@ -294,6 +310,7 @@ ALLOW_SERVER_KEY_PARAGRAPH_TTS=false
 | --- | --- | --- |
 | GET | `/api/health` | 健康检查：运行时长、文章目录、后台是否启用 |
 | GET | `/api/config` | 前端启动配置与 Key 开放策略 |
+| POST | `/api/ai/models` | 从用户提供的 OpenAI 兼容端点拉取模型列表 |
 | GET | `/api/articles` | 文章列表（带缓存，目录变更自动失效） |
 | GET | `/api/articles/:id` | 文章详情，正文已切分为段落 |
 | POST | `/api/translate` | 翻译代理 |

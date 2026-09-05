@@ -501,6 +501,79 @@ app.get("/api/articles/:id", (req, res) => {
   }
 });
 
+function normalizeOpenAIBaseUrl(input: unknown): string {
+  if (typeof input !== "string") return "";
+  return input.trim().replace(/\/+$/, '').replace(/\/chat\/completions$/, '').replace(/\/models$/, '');
+}
+
+function validHttpUrl(input: string): boolean {
+  try {
+    const url = new URL(input);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return false;
+    const hostname = url.hostname.toLowerCase();
+    // This endpoint fetches a user-supplied upstream from the server. Reject
+    // obvious local/private targets to avoid turning it into an SSRF proxy.
+    if (hostname === "localhost" || hostname === "metadata.google.internal" || hostname.endsWith(".local") || hostname === "0.0.0.0" || hostname === "::1") return false;
+    if (/^(10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[0-1])\.)/.test(hostname)) return false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Pull models from any OpenAI-compatible upstream (New API, One API, local
+// gateways, Ollama-compatible proxies, etc.). The key is never logged.
+app.post("/api/ai/models", async (req, res) => {
+  const baseUrl = normalizeOpenAIBaseUrl(req.body?.baseUrl);
+  const apiKey = typeof req.body?.apiKey === "string" ? req.body.apiKey.trim() : "";
+  if (!baseUrl || !validHttpUrl(baseUrl)) {
+    return res.status(400).json({ error: "AI 端点必须是合法的 http(s) URL" });
+  }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12_000);
+  try {
+    const response = await fetch(`${baseUrl}/models`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+      },
+      signal: controller.signal,
+    });
+    const raw = await response.text();
+    let payload: unknown;
+    try { payload = JSON.parse(raw); } catch { payload = null; }
+    if (!response.ok) {
+      const message = payload && typeof payload === "object" && "error" in payload
+        ? String((payload as { error?: unknown }).error)
+        : `上游返回 HTTP ${response.status}`;
+      return res.status(response.status === 401 || response.status === 403 ? 401 : 502).json({ error: message });
+    }
+    if (!payload || typeof payload !== "object" || !Array.isArray((payload as { data?: unknown }).data)) {
+      return res.status(502).json({ error: "上游响应不是 OpenAI 兼容的模型列表格式" });
+    }
+    const models = (payload as { data: unknown[] }).data
+      .map(item => {
+        if (typeof item === "string") return { id: item };
+        if (!item || typeof item !== "object" || typeof (item as { id?: unknown }).id !== "string") return null;
+        const model = item as { id: string; owned_by?: unknown; name?: unknown };
+        return {
+          id: model.id,
+          name: typeof model.name === "string" ? model.name : undefined,
+          ownedBy: typeof model.owned_by === "string" ? model.owned_by : undefined,
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a!.id.localeCompare(b!.id));
+    return res.json({ models });
+  } catch (error) {
+    const message = (error as Error).name === "AbortError" ? "上游模型接口请求超时" : (error as Error).message;
+    return res.status(502).json({ error: `无法连接 AI 上游：${message}` });
+  } finally {
+    clearTimeout(timer);
+  }
+});
+
 // Translation routing Proxy & Fallback free translator
 app.post("/api/translate", async (req, res) => {
   const { text, engine, apiKey, baseUrl, model } = req.body;

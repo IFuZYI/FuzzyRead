@@ -4,21 +4,25 @@ import os from 'node:os';
 import path from 'node:path';
 
 let root: string;
-let originalCwd: string;
+let originalDataDir: string | undefined;
+let originalArticlesDir: string | undefined;
 let indexApi: typeof import('../src/server/articleIndex');
 
 beforeAll(async () => {
-  originalCwd = process.cwd();
   root = fs.mkdtempSync(path.join(os.tmpdir(), 'fuzyread-index-'));
   fs.mkdirSync(path.join(root, 'data', 'articles', 'bbc_english_top_articles', '2026'), { recursive: true });
-  process.chdir(root);
-  process.env.DATA_DIR = 'data';
-  delete process.env.ARTICLES_DIR;
+  originalDataDir = process.env.DATA_DIR;
+  originalArticlesDir = process.env.ARTICLES_DIR;
+  process.env.DATA_DIR = path.join(root, 'data');
+  process.env.ARTICLES_DIR = path.join(root, 'data', 'articles');
   indexApi = await import('../src/server/articleIndex');
 });
 
 afterAll(() => {
-  process.chdir(originalCwd);
+  if (originalDataDir === undefined) delete process.env.DATA_DIR;
+  else process.env.DATA_DIR = originalDataDir;
+  if (originalArticlesDir === undefined) delete process.env.ARTICLES_DIR;
+  else process.env.ARTICLES_DIR = originalArticlesDir;
   fs.rmSync(root, { recursive: true, force: true });
 });
 

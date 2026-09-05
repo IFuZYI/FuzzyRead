@@ -13,5 +13,8 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     exclude: ['tests/admin-api.test.ts', 'tests/scheduler.test.ts'],
     restoreMocks: true,
+    pool: 'threads',
+    fileParallelism: false,
+    maxWorkers: 1,
   },
 });

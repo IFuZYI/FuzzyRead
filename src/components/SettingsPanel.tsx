@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, X, Key, Globe, Eye, EyeOff, LayoutTemplate, Sparkles, Check, Volume2 } from 'lucide-react';
-import { AISettings, ReadingPreferences, TranslationEngine } from '../types';
-import { DEFAULT_BASES, DEFAULT_MODELS, FONT_SIZES } from '../utils/settingsModel';
+import { AISettings, AIModelOption, ReadingPreferences, TranslationEngine } from '../types';
+import { DEFAULT_BASES, DEFAULT_MODELS, FONT_SIZES, normalizeOpenAIBaseUrl } from '../utils/settingsModel';
+import { getApiUrl } from '../utils/api';
 
 interface SettingsPanelProps {
   settings: AISettings;
@@ -34,6 +35,9 @@ export default function SettingsPanel({
 }: SettingsPanelProps) {
   const [showKey, setShowKey] = useState(false);
   const [browserVoices, setBrowserVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [upstreamModels, setUpstreamModels] = useState<AIModelOption[]>([]);
+  const [loadingModels, setLoadingModels] = useState(false);
+  const [modelFetchError, setModelFetchError] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -169,7 +173,7 @@ export default function SettingsPanel({
     const updated: AISettings = {
       ...settings,
       engine,
-      model: engine === 'other' ? (settings.otherModel || 'custom-model') : DEFAULT_MODELS[engine][0],
+      model: engine === 'other' ? (settings.otherModel || settings.model || '') : DEFAULT_MODELS[engine][0],
       apiKey: key,
       baseUrl: baseUrl,
       openaiKey: settings.openaiKey || (settings.engine === 'openai' ? settings.apiKey : ''),
@@ -219,7 +223,47 @@ export default function SettingsPanel({
     onSettingsChange(updated);
   };
 
-  // Get voice options depending on engine/model
+  const fetchUpstreamModels = async () => {
+    const baseUrl = settings.engine === 'other'
+      ? settings.otherBase || ''
+      : settings.engine === 'openai'
+        ? settings.openaiBase || settings.baseUrl || ''
+        : settings.engine === 'gemini'
+          ? settings.geminiBase || settings.baseUrl || ''
+          : settings.engine === 'deepseek'
+            ? settings.deepseekBase || settings.baseUrl || ''
+            : settings.baseUrl || '';
+    const apiKey = settings.engine === 'other'
+      ? settings.otherKey || ''
+      : settings.engine === 'openai'
+        ? settings.openaiKey || settings.apiKey || ''
+        : settings.engine === 'gemini'
+          ? settings.geminiKey || settings.apiKey || ''
+          : settings.engine === 'deepseek'
+            ? settings.deepseekKey || settings.apiKey || ''
+            : settings.apiKey || '';
+    setLoadingModels(true);
+    setModelFetchError('');
+    try {
+      const response = await fetch(getApiUrl('/api/ai/models'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ baseUrl: normalizeOpenAIBaseUrl(baseUrl), apiKey }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '模型列表拉取失败');
+      const models: AIModelOption[] = data.models || [];
+      setUpstreamModels(models);
+      if (models.length > 0 && !models.some(model => model.id === settings.model)) {
+        onSettingsChange({ ...settings, model: models[0].id });
+      }
+    } catch (error) {
+      setModelFetchError((error as Error).message || '模型列表拉取失败');
+    } finally {
+      setLoadingModels(false);
+    }
+  };
+
   const getVoiceOptions = () => {
     const engine = preferences.paragraphTtsEngine || 'browser';
     const accent = preferences.pronunciationType || 'uk';
@@ -653,8 +697,8 @@ export default function SettingsPanel({
             {/* Paragraph translation provider */}
             <div className="space-y-1.5">
               <label className="text-[14px] font-normal text-[#1d1d1f] block">翻译引擎 (Translation Engine)</label>
-              <div className="grid grid-cols-4 gap-1">
-                {(['free', 'openai', 'gemini', 'deepseek'] as TranslationEngine[]).map((eng) => {
+              <div className="grid grid-cols-5 gap-1">
+                {(['free', 'openai', 'gemini', 'deepseek', 'other'] as TranslationEngine[]).map((eng) => {
                   const isActive = settings.engine === eng;
                   return (
                     <button
@@ -667,7 +711,7 @@ export default function SettingsPanel({
                       }`}
                       id={`engine-btn-${eng}`}
                     >
-                      {eng === 'free' ? '微软/谷歌' : eng === 'openai' ? 'OpenAI' : eng === 'gemini' ? 'Gemini' : 'DeepSeek'}
+                      {eng === 'free' ? '微软/谷歌' : eng === 'openai' ? 'OpenAI' : eng === 'gemini' ? 'Gemini' : eng === 'deepseek' ? 'DeepSeek' : '自定义'}
                     </button>
                   );
                 })}
@@ -675,7 +719,38 @@ export default function SettingsPanel({
             </div>
 
             {/* Paragraph Translation model selector */}
-            {settings.engine !== 'other' && (
+            {settings.engine !== 'free' ? (
+              <div className="space-y-2 animate-fade-in" id="custom-model-selector">
+                <div className="flex items-center gap-2">
+                  <input
+                    value={settings.model}
+                    onChange={e => onSettingsChange({ ...settings, model: e.target.value })}
+                    placeholder="填写模型 ID，例如 gpt-4o、claude-3-5-sonnet"
+                    className="apple-focus flex-1 text-[13px] rounded-xl px-3 py-2 bg-[#f5f5f7] font-mono outline-none"
+                    id="custom-model-input"
+                  />
+                  <button
+                    type="button"
+                    onClick={fetchUpstreamModels}
+                    disabled={loadingModels}
+                    className="apple-focus apple-pill shrink-0 bg-[#0071e3] text-white px-3 py-2 text-[12px] disabled:opacity-50"
+                  >
+                    {loadingModels ? '拉取中…' : '拉取模型'}
+                  </button>
+                </div>
+                {upstreamModels.length > 0 && (
+                  <select
+                    value={settings.model}
+                    onChange={e => onSettingsChange({ ...settings, model: e.target.value })}
+                    className="apple-focus w-full text-[13px] rounded-xl px-3 py-2 bg-[#f5f5f7] outline-none"
+                    id="upstream-model-selector"
+                  >
+                    {upstreamModels.map(model => <option key={model.id} value={model.id}>{model.id}{model.ownedBy ? ` · ${model.ownedBy}` : ''}</option>)}
+                  </select>
+                )}
+                {modelFetchError && <p className="text-[12px] text-[#b3261e]">{modelFetchError}</p>}
+              </div>
+            ) : (
               <div className="space-y-1 animate-fade-in" id="model-select-wrapper">
                 <label className="text-[11px] font-semibold text-gray-500 block">具体翻译语言模型 (Model Choice)</label>
                 <select
@@ -686,11 +761,7 @@ export default function SettingsPanel({
                 >
                   {DEFAULT_MODELS[settings.engine]?.map((m) => (
                     <option key={m} value={m}>
-                      {m === 'Microsoft Translate Free' ? '微软内置 (完全免费/免密码)'
-                       : m === 'Google Translate Free' ? '谷歌内置 (完全免费/免密码)'
-                       : m === 'Microsoft Azure Translate' ? '微软云服务 (Azure Translator)'
-                       : m === 'Google Cloud Translate' ? '谷歌云服务 (Google Cloud Translate)'
-                       : m}
+                      {m === 'Microsoft Translate Free' ? '微软内置 (完全免费/免密码)' : m === 'Google Translate Free' ? '谷歌内置 (完全免费/免密码)' : m === 'Microsoft Azure Translate' ? '微软云服务 (Azure Translator)' : m === 'Google Cloud Translate' ? '谷歌云服务 (Google Cloud Translate)' : m}
                     </option>
                   ))}
                 </select>
@@ -936,13 +1007,12 @@ export default function SettingsPanel({
               </div>
             )}
 
-            {/* Custom Other Translation Engine API settings */}
             {settings.engine === 'other' && (
               <div className="space-y-2 p-3 bg-[#f5f5f7] border border-[#d2d2d7] rounded-2xl animate-fade-in" id="custom-other-translation-deck">
-                <span className="text-xs font-bold text-gray-800 block">自定义兼容 OpenAI 翻译授权自备 (其他)</span>
+                <span className="text-xs font-bold text-gray-800 block">自定义 OpenAI 兼容端点</span>
                 
                 <div className="space-y-1">
-                  <label className="text-[10px] text-gray-500 font-semibold block">自定 API Key（自定义翻译）</label>
+                  <label className="text-[10px] text-gray-500 font-semibold block">API Key（可选，按上游要求填写）</label>
                   <input
                     type="password"
                     value={settings.otherKey || ''}
@@ -954,7 +1024,7 @@ export default function SettingsPanel({
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] text-gray-500 font-semibold block">自定代理端点 Base URL</label>
+                  <label className="text-[10px] text-gray-500 font-semibold block">Base URL（例如 https://newapi.example.com/v1）</label>
                   <input
                     type="text"
                     value={settings.otherBase || ''}
